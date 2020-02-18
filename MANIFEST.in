@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include homzhub_customization *.css
+recursive-include homzhub_customization *.csv
+recursive-include homzhub_customization *.html
+recursive-include homzhub_customization *.ico
+recursive-include homzhub_customization *.js
+recursive-include homzhub_customization *.json
+recursive-include homzhub_customization *.md
+recursive-include homzhub_customization *.png
+recursive-include homzhub_customization *.py
+recursive-include homzhub_customization *.svg
+recursive-include homzhub_customization *.txt
+recursive-exclude homzhub_customization *.pyc
