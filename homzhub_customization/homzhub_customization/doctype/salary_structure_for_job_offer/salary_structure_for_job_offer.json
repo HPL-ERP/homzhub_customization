@@ -1,0 +1,43 @@
+{
+ "creation": "2020-04-10 20:28:53.022990",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "component",
+  "monthly",
+  "annually"
+ ],
+ "fields": [
+  {
+   "fieldname": "component",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Component",
+   "options": "\nBase Salary\nHouse Rent Allowance (HRA)\nTransport Allowance (TA)\nCommunication Allowance (CA)\nCity Compensatory Allowance (CCA)\nMedical Allowance\nIndividual Performance Incentive\nCompany Performance Bonus\nProvident Fund (Employer Contribution)\nESIC (Employer Contribution)\nTotal"
+  },
+  {
+   "fieldname": "monthly",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Monthly"
+  },
+  {
+   "fieldname": "annually",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Annually"
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-04-10 20:34:38.347380",
+ "modified_by": "Administrator",
+ "module": "homzhub_customization",
+ "name": "Salary Structure For Job Offer",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
