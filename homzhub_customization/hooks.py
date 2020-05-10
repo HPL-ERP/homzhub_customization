@@ -86,6 +86,12 @@ app_license = "MIT"
 # 		"on_trash": "method"
 #	}
 # }
+doc_events = {
+	"Project": {
+		"validate":"homzhub_customization.homzhub_customization.doctype.project.validate_dates"
+	}
+}
+
 
 # Scheduled Tasks
 # ---------------
