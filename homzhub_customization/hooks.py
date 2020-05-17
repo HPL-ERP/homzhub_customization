@@ -89,6 +89,9 @@ app_license = "MIT"
 doc_events = {
 	"Project": {
 		"validate":"homzhub_customization.homzhub_customization.doctype.project.validate_dates"
+	},
+	"Employee": {
+		"validate":"homzhub_customization.homzhub_customization.doctype.employee.validate_employee"
 	}
 }
 
