@@ -14,6 +14,13 @@ app_license = "MIT"
 # Includes in <head>
 # ------------------
 
+scheduler_events = {
+    "cron": {
+        "* * * * *": [
+            "frappe.email.queue.flush"
+        ]
+    }
+}
 # include js, css files in header of desk.html
 # app_include_css = "/assets/homzhub_customization/css/homzhub_customization.css"
 # app_include_js = "/assets/homzhub_customization/js/homzhub_customization.js"
