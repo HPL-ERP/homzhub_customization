@@ -1,0 +1,44 @@
+{
+ "creation": "2020-06-04 20:46:16.620027",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "from_month",
+  "to_month",
+  "rent"
+ ],
+ "fields": [
+  {
+   "fieldname": "from_month",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "From Month",
+   "options": "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11"
+  },
+  {
+   "fieldname": "to_month",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "To Month",
+   "options": "2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12"
+  },
+  {
+   "fieldname": "rent",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Rent"
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-06-04 20:48:39.715944",
+ "modified_by": "Administrator",
+ "module": "homzhub_customization",
+ "name": "Varying Rent",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
