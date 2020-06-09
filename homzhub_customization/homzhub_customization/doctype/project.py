@@ -10,7 +10,3 @@ def validate_dates(doc,method):
     if doc.agreement_start_date and  doc.agreement_end_date:
         if doc.agreement_start_date >= doc.agreement_end_date:
             frappe.throw('Agreement End Date Must Be Greater Than Start Date')
-
-def set_project_to_invoice(doc,method):
-	for d in doc.invoices:
-		frappe.db.set_value('Sales Invoice',d.invoice,'project',doc.project)
