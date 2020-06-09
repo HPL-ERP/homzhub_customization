@@ -41,6 +41,7 @@ doctype_js = {
 				"Project":"public/js/project.js",
 				"Sales Order":"public/js/sales_order.js",
 				"Sales Invoice":"public/js/sales_invoice.js",
+				"Subscription":"public/js/subscription.js",
 }
 
 # Home Pages
@@ -106,7 +107,7 @@ doc_events = {
 		"validate":"homzhub_customization.homzhub_customization.doctype.employee.validate_employee"
 	},
 	"Subscription": {
-		"on_change":["homzhub_customization.homzhub_customization.doctype.project.set_project_to_invoice"]
+		"on_change":["homzhub_customization.homzhub_customization.doctype.sales_invoice.execute"]
 					},
 }
 
