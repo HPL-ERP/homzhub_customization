@@ -17,18 +17,26 @@ frappe.ui.form.on('Sales Order Item', {
 })
 
 frappe.ui.form.on('Sales Order', {
-onload:function(frm){
-	if(frm.doc.project!=undefined){
-	frappe.db.get_value("Project", {"name":frm.doc.project},['property_rent','tenure'], function(r){
-		frm.set_value('property_rent',r.property_rent)
-		frm.set_value('tenure',r.tenure)
+validate:function(frm){
+	if(frm.doc.project!=undefined && frm.doc.__islocal){
+		frappe.call({
+			method:
+			"homzhub_customization.homzhub_customization.doctype.sales_order.item_table_calculation",
+			args: {
+				doc:cur_frm.doc	
+			},
+			callback: function (data) {
+				$.each(data.message[0] || [], function (i, v) {
+					cur_frm.doc.items.forEach(function(itm){
+				  if(itm.item_code==i){
+					 itm.rate=v
+					 }
+				 })
+			 })
+	
+			}
 		})
 	}
-},
-validate:function(frm){
-		cur_frm.doc.items.forEach(function(itm){
-		itm.rate=((parseInt(frm.doc.tenure)*parseInt(frm.doc.property_rent))*(parseInt(itm.service_charges_in_per)/100))
-	})
 },
 onload:function(frm){
 	if(frm.doc.project!=undefined && frm.doc.__islocal){
@@ -61,3 +69,5 @@ onload:function(frm){
 }
 }
 })
+
+	

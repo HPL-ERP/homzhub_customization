@@ -12,8 +12,8 @@ def get_plan_rate(doc,plan, quantity=1, customer=None):
 		rate=int(doc.property_rent)*int(doc.agreement_tenure)	
 	if doc.rent_distribution:
 		for table in doc.rent_distribution:
-			rate+=(table.to_month-table.from_month+1)*int(table.rent)
-	return rate*(int(plan.rate)/100)
+			rate+=(int(table.to_month)-int(table.from_month)+1)*int(table.rent)
+	return rate*(int(plan.rate)/100),plan.rate
 
 def execute(doc,method):
 	set_project_and_subscription_to_invoice(doc,method)
@@ -34,10 +34,11 @@ def get_items_from_plans(doc, plans, prorate=0):
 	customer = doc.customer
 	for plan in plans:
 		item_code = frappe.db.get_value("Subscription Plan", plan.plan, "item")
+		rate,srv_chg=get_plan_rate(doc,plan.plan, plan.qty, customer)
 		if not prorate:
-			items.append({'item_code': item_code, 'qty': plan.qty, 'rate': get_plan_rate(doc,plan.plan, plan.qty, customer)})
+			items.append({'item_code': item_code, 'qty': plan.qty, 'rate': rate,'service_charges_in_per':srv_chg})
 		else:
-			items.append({'item_code': item_code, 'qty': plan.qty, 'rate': (get_plan_rate(doc,plan.plan, plan.qty, customer) * prorate_factor)})
+			items.append({'item_code': item_code, 'qty': plan.qty, 'rate': (rate * prorate_factor)})
 
 	return items
 
