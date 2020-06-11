@@ -20,6 +20,16 @@ frappe.ui.form.on('Project', {
     },
     property_owner: function(frm){
 		frm.set_value('property_address','');
+		frm.set_value("owner_name","")
+		frappe.db.get_value("Customer", {"name":cur_frm.doc.property_owner},"customer_name", function(r){
+			frm.set_value("owner_name",r.customer_name)
+			})
+	},
+	property_tenant: function(frm){
+		frm.set_value("tenant_name","")
+		frappe.db.get_value("Customer", {"name":frm.doc.property_tenant},"customer_name", function(r){
+        frm.set_value("tenant_name",r.customer_name)
+		})
 	},
 	property_address: function(frm){
 		if (frm.doc.property_address!=undefined){
