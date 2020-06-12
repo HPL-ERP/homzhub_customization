@@ -32,6 +32,7 @@ frappe.ui.form.on('Project', {
 		})
 	},
 	property_address: function(frm){
+		frm.set_value('address_detail', "");
 		if (frm.doc.property_address!=undefined){
 		frappe.call({
 			method: "frappe.contacts.doctype.address.address.get_address_display",
