@@ -11,7 +11,7 @@ def get_rent_distribution_table(docname,doctype):
 			return get_rent(docname,doctype)
 
 	else:
-		if frappe.db.get_value('{0}'.format(doctype),docname,'property_rent')==1:
+		if frappe.db.get_value('{0}'.format(doctype),docname,'property_rent'):
 			return get_rent(docname,doctype)
 		else:
 			return get_table(docname,doctype)
