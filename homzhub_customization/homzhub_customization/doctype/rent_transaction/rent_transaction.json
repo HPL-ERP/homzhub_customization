@@ -27,10 +27,12 @@
   "recieve_rent",
   "recieved_reference_no",
   "recieve_date",
+  "rent_recieved",
   "column_break_17",
   "transfer_rent",
   "transfer_reference_no",
   "transfer_date",
+  "rent_transffered",
   "section_break_21",
   "payment_entries",
   "amended_from"
@@ -109,7 +111,7 @@
    "fieldtype": "Link",
    "label": "Amended From",
    "no_copy": 1,
-   "options": "Property Rent",
+   "options": "Rent Transaction",
    "print_hide": 1,
    "read_only": 1
   },
@@ -176,13 +178,25 @@
    "fieldname": "tenant_name",
    "fieldtype": "Data",
    "label": "Tenant Name"
+  },
+  {
+   "default": "0",
+   "fieldname": "rent_recieved",
+   "fieldtype": "Check",
+   "label": "Rent Recieved "
+  },
+  {
+   "default": "0",
+   "fieldname": "rent_transffered",
+   "fieldtype": "Check",
+   "label": "Rent Transffered"
   }
  ],
  "is_submittable": 1,
- "modified": "2020-07-08 23:16:09.104369",
+ "modified": "2020-07-08 23:24:07.464934",
  "modified_by": "Administrator",
  "module": "homzhub_customization",
- "name": "Property Rent",
+ "name": "Rent Transaction",
  "owner": "Administrator",
  "permissions": [
   {
