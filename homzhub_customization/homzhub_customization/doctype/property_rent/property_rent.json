@@ -1,0 +1,236 @@
+{
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "RNT.-.####",
+ "creation": "2020-07-08 21:58:38.087336",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "project",
+  "owner",
+  "owner_name",
+  "tenant",
+  "tenant_name",
+  "column_break_4",
+  "subscription",
+  "subscription_plan",
+  "subscription_start_date",
+  "subscription_end_date",
+  "rent_details_section",
+  "agreement_start",
+  "agreement_end",
+  "column_break_10",
+  "agreement_tenure",
+  "rent_amount",
+  "accounting_section",
+  "recieve_rent",
+  "recieved_reference_no",
+  "recieve_date",
+  "column_break_17",
+  "transfer_rent",
+  "transfer_reference_no",
+  "transfer_date",
+  "section_break_21",
+  "payment_entries",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project"
+  },
+  {
+   "fieldname": "subscription",
+   "fieldtype": "Link",
+   "label": "Subscription",
+   "options": "Subscription"
+  },
+  {
+   "fieldname": "agreement_start",
+   "fieldtype": "Date",
+   "label": "Agreement Start"
+  },
+  {
+   "fieldname": "agreement_end",
+   "fieldtype": "Date",
+   "label": "Agreement End"
+  },
+  {
+   "fieldname": "recieve_rent",
+   "fieldtype": "Button",
+   "label": "Recieve Rent"
+  },
+  {
+   "fieldname": "transfer_rent",
+   "fieldtype": "Button",
+   "label": "Transfer Rent"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "subscription_plan",
+   "fieldtype": "Link",
+   "label": "Subscription Plan",
+   "options": "Subscription Plan"
+  },
+  {
+   "fieldname": "rent_details_section",
+   "fieldtype": "Section Break",
+   "label": "Rent Details"
+  },
+  {
+   "fieldname": "agreement_tenure",
+   "fieldtype": "Int",
+   "label": "Agreement Tenure"
+  },
+  {
+   "fieldname": "rent_amount",
+   "fieldtype": "Data",
+   "label": "Rent Amount"
+  },
+  {
+   "fieldname": "accounting_section",
+   "fieldtype": "Section Break",
+   "label": "Accounting"
+  },
+  {
+   "fieldname": "payment_entries",
+   "fieldtype": "Table",
+   "label": "Payment Entries",
+   "options": "Rent Entries"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Property Rent",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "recieved_reference_no",
+   "fieldtype": "Data",
+   "label": "Recieved Reference No"
+  },
+  {
+   "fieldname": "recieve_date",
+   "fieldtype": "Date",
+   "label": "Recieve Date"
+  },
+  {
+   "fieldname": "column_break_17",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "transfer_reference_no",
+   "fieldtype": "Data",
+   "label": "Transfer Reference No"
+  },
+  {
+   "fieldname": "transfer_date",
+   "fieldtype": "Date",
+   "label": "Transfer Date"
+  },
+  {
+   "fieldname": "section_break_21",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "subscription_start_date",
+   "fieldtype": "Date",
+   "label": "Subscription Start Date"
+  },
+  {
+   "fieldname": "subscription_end_date",
+   "fieldtype": "Date",
+   "label": "Subscription End Date"
+  },
+  {
+   "fieldname": "owner",
+   "fieldtype": "Link",
+   "label": "Owner",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "owner_name",
+   "fieldtype": "Data",
+   "label": "Owner Name"
+  },
+  {
+   "fieldname": "tenant",
+   "fieldtype": "Link",
+   "label": "Tenant",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "tenant_name",
+   "fieldtype": "Data",
+   "label": "Tenant Name"
+  }
+ ],
+ "is_submittable": 1,
+ "modified": "2020-07-08 23:16:09.104369",
+ "modified_by": "Administrator",
+ "module": "homzhub_customization",
+ "name": "Property Rent",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Director",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "show_name_in_global_search": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
