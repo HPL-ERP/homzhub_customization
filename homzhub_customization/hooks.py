@@ -108,9 +108,22 @@ doc_events = {
 	},
 	"Subscription": {
 		"on_change":["homzhub_customization.homzhub_customization.doctype.sales_invoice.execute"]
-					},
+	},
+	"Task": {
+		"after_insert":"homzhub_customization.homzhub_customization.doctype.auto_share.on_save"
+	},
+	"Issue": {
+		"after_insert":"homzhub_customization.homzhub_customization.doctype.auto_share.on_save"
+	}
+
 }
 
+scheduler_events = {
+	"daily": [
+		"homzhub_customization.homzhub_customization.doctype.custom_notification.weekly_auto_email"
+		"homzhub_customization.homzhub_customization.doctype.custom_notification.execute"
+	],
+}
 
 # Scheduled Tasks
 # ---------------
