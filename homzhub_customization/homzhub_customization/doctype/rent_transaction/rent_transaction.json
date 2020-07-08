@@ -23,10 +23,11 @@
   "column_break_10",
   "agreement_tenure",
   "rent_amount",
+  "rent_auto_deduct",
   "accounting_section",
-  "recieve_rent",
-  "recieved_reference_no",
-  "recieve_date",
+  "receive_rent",
+  "received_reference_no",
+  "receive_date",
   "rent_recieved",
   "column_break_17",
   "transfer_rent",
@@ -61,11 +62,7 @@
    "label": "Agreement End"
   },
   {
-   "fieldname": "recieve_rent",
-   "fieldtype": "Button",
-   "label": "Recieve Rent"
-  },
-  {
+   "depends_on": "eval:doc.rent_auto_deduct == \"1\"",
    "fieldname": "transfer_rent",
    "fieldtype": "Button",
    "label": "Transfer Rent"
@@ -120,20 +117,11 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "recieved_reference_no",
-   "fieldtype": "Data",
-   "label": "Recieved Reference No"
-  },
-  {
-   "fieldname": "recieve_date",
-   "fieldtype": "Date",
-   "label": "Recieve Date"
-  },
-  {
    "fieldname": "column_break_17",
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:doc.rent_auto_deduct == \"1\"",
    "fieldname": "transfer_reference_no",
    "fieldtype": "Data",
    "label": "Transfer Reference No"
@@ -190,10 +178,33 @@
    "fieldname": "rent_transffered",
    "fieldtype": "Check",
    "label": "Rent Transffered"
+  },
+  {
+   "default": "0",
+   "fieldname": "rent_auto_deduct",
+   "fieldtype": "Check",
+   "label": "Rent Auto Deduct"
+  },
+  {
+   "depends_on": "eval:doc.rent_auto_deduct == \"1\"",
+   "fieldname": "receive_rent",
+   "fieldtype": "Button",
+   "label": "Receive Rent"
+  },
+  {
+   "depends_on": "eval:doc.rent_auto_deduct == \"1\"",
+   "fieldname": "received_reference_no",
+   "fieldtype": "Data",
+   "label": "Received Reference No"
+  },
+  {
+   "fieldname": "receive_date",
+   "fieldtype": "Date",
+   "label": "Receive Date"
   }
  ],
  "is_submittable": 1,
- "modified": "2020-07-08 23:24:07.464934",
+ "modified": "2020-07-09 02:11:54.366106",
  "modified_by": "Administrator",
  "module": "homzhub_customization",
  "name": "Rent Transaction",
