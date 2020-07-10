@@ -128,7 +128,7 @@ doc_events = {
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
+ scheduler_events = {
 # 	"all": [
 # 		"homzhub_customization.tasks.all"
 # 	],
