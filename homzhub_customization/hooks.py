@@ -120,8 +120,9 @@ doc_events = {
 
 scheduler_events = {
 	"daily": [
-		"homzhub_customization.homzhub_customization.doctype.custom_notification.weekly_auto_email"
-		"homzhub_customization.homzhub_customization.doctype.custom_notification.execute"
+		"homzhub_customization.homzhub_customization.doctype.custom_notification.weekly_auto_email",
+		"homzhub_customization.homzhub_customization.doctype.custom_notification.execute",
+		"homzhub_customization.homzhub_customization.doctype.rent_transaction.rent_transaction.create_document"
 	],
 }
 
