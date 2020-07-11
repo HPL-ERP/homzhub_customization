@@ -8,7 +8,13 @@ from frappe.model.document import Document
 from frappe.utils import flt,today
 
 class RentTransaction(Document):
-	def make_journal_entry_from_receive_rent(self):	
+	def make_journal_entry_from_receive_rent(self):
+		if self.payment_entries:
+			for d in self.payment_entries:
+				if frappe.db.get_value('Journal Entry',d.account_entries,'user_remark')=="Rent Received from "+self.tenant_name:
+					frappe.throw('Receive Rent Document Already Exist')
+					break
+
 		doc=frappe.new_doc('Journal Entry')
 		doc.voucher_type="Bank Entry"
 		doc.append("accounts", {
@@ -28,7 +34,15 @@ class RentTransaction(Document):
 		doc.submit()
 		self.rent_recieved=1
 		self.status="Rent Received"
+		self.append("payment_entries", {
+			"account_entries":doc.name
+		})
 	def make_journal_entry_from_transfer_rent(self):
+		if self.payment_entries:
+			for d in self.payment_entries:
+				if frappe.db.get_value('Journal Entry',d.account_entries,'user_remark')=="Rent Transfer To "+self.owner_name:
+					frappe.throw('Transffered Rent Document Already Exist')
+					break
 		doc=frappe.new_doc('Journal Entry')
 		doc.voucher_type="Bank Entry"
 		doc.append("accounts", {
@@ -48,6 +62,9 @@ class RentTransaction(Document):
 		doc.submit()
 		self.rent_transffered=1
 		self.status="Rent Transffered"
+		self.append("payment_entries", {
+			"account_entries":doc.name
+		})
 
 def create_document():
 	from datetime import date
@@ -57,7 +74,7 @@ def create_document():
 			pro=frappe.get_doc('Project',project.name)
 			for sub in frappe.get_all('Subscription',filters={'project':project.name},fields=['name','current_invoice_start','current_invoice_end','rent_auto_deduct']):
 				plan=frappe.db.get_value('Subscription Plan Detail',{'parent':sub.name},'plan')
-				if plan and plan == 'Homzhub Comfort':
+				if plan and plan in ['Homzhub Comfort','Homzhub Tenant Care']:
 					doc=frappe.new_doc('Rent Transaction')
 					doc.project=pro.name
 					doc.subscription=sub.name
