@@ -91,6 +91,7 @@ def create_document():
 					doc.agreement_tenure=pro.agreement_tenure
 					doc.rent_amount= pro.property_rent if pro.fixed_rent==1 else ''
 					doc.rent_auto_deduct=sub.rent_auto_deduct
+					doc.tenant_list=pro.tenant_list
 					doc.save()
 
 @frappe.whitelist()
@@ -119,7 +120,8 @@ def get_fields(project):
 			'agreement_end':pro.agreement_end_date,
 			'agreement_tenure':pro.agreement_tenure,
 			'rent_amount':pro.property_rent if pro.fixed_rent==1 else '' ,
-			'rent_auto_deduct':sub.rent_auto_deduct
+			'rent_auto_deduct':sub.rent_auto_deduct,
+			'tenant_list':pro.tenant_list
 			}
 	return fields
 			
