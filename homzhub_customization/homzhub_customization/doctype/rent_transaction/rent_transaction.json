@@ -11,6 +11,7 @@
   "owner",
   "posting_date",
   "owner_name",
+  "tenant_list",
   "tenant",
   "tenant_name",
   "column_break_4",
@@ -207,10 +208,16 @@
    "fieldname": "posting_date",
    "fieldtype": "Date",
    "label": "Posting Date"
+  },
+  {
+   "fieldname": "tenant_list",
+   "fieldtype": "Table",
+   "label": "Tenant List",
+   "options": "Tenant List"
   }
  ],
  "is_submittable": 1,
- "modified": "2020-07-09 23:05:46.227784",
+ "modified": "2020-07-12 14:31:21.591194",
  "modified_by": "Administrator",
  "module": "homzhub_customization",
  "name": "Rent Transaction",
