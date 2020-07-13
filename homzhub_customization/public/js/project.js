@@ -18,6 +18,13 @@ frappe.ui.form.on('Project', {
 				}
 			};
 		});
+		frm.set_query("tenant", "tenant_list", function() {
+			return {
+				filters: {
+					customer_group:'Tenant'
+				}
+			}
+		});
     },
     property_owner: function(frm){
 		frm.set_value('property_address','');
@@ -64,4 +71,13 @@ frappe.ui.form.on('Project', {
 			frm.set_value('varying_rent',0)
 		}
 	},
+
 })
+frappe.ui.form.on("Tenant List", "tenant", function(frm, cdt, cdn) {
+	var d = locals[cdt][cdn];
+	frappe.db.get_value('Customer', {name: d.tenant}, 'customer_name', (r) => {
+		d.tenant_name = r.customer_name
+		refresh_field("tenant_name", d.name, d.parentfield);
+	})
+
+});
