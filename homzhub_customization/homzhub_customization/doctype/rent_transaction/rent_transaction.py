@@ -10,8 +10,11 @@ from frappe.utils import flt,today
 class RentTransaction(Document):
 	def make_journal_entry_from_receive_rent(self):
 		if self.payment_entries:
-			for d in self.payment_entries:
-				if frappe.db.get_value('Journal Entry',d.account_entries,'user_remark')=="Rent Received from "+self.tenant_name:
+			for ent in self.payment_entries:
+				user_remark="Rent Received from "
+				for d in self.tenant_list:
+					user_remark+=(' '+d.tenant_name+',')
+				if frappe.db.get_value('Journal Entry',ent.account_entries,'user_remark')==user_remark.rstrip(','):
 					frappe.throw('Receive Rent Document Already Exist')
 					break
 
@@ -28,7 +31,10 @@ class RentTransaction(Document):
 		})
 		doc.cheque_no=self.received_reference_no
 		doc.cheque_date=self.receive_date
-		doc.user_remark="Rent Received from "+self.tenant_name
+		user_remark="Rent Received from "
+		for d in self.tenant_list:
+			user_remark+=(' '+d.tenant_name+',')
+		doc.user_remark=user_remark.rstrip(',')
 		doc.posting_date=self.receive_date
 		doc.insert()
 		doc.submit()
@@ -37,6 +43,7 @@ class RentTransaction(Document):
 		self.append("payment_entries", {
 			"account_entries":doc.name
 		})
+		self.save()
 	def make_journal_entry_from_transfer_rent(self):
 		if self.payment_entries:
 			for d in self.payment_entries:
@@ -65,7 +72,7 @@ class RentTransaction(Document):
 		self.append("payment_entries", {
 			"account_entries":doc.name
 		})
-
+		self.save()
 def create_document():
 	from datetime import date
 	today = date.today()
@@ -84,8 +91,6 @@ def create_document():
 					doc.subscription_plan=plan
 					doc.subscription_start_date=sub.current_invoice_start
 					doc.subscription_end_date=sub.current_invoice_end
-					doc.tenant=pro.property_tenant
-					doc.tenant_name=pro.tenant_name
 					doc.agreement_start=pro.agreement_start_date
 					doc.agreement_end=pro.agreement_end_date
 					doc.agreement_tenure=pro.agreement_tenure
@@ -99,7 +104,7 @@ def get_fields(project):
 	from frappe.utils import today
 	fields={
 			'subscription':'','owner':'','owner_name':'','posting_date':today(),'subscription_plan':'','subscription_start_date':'',
-			'subscription_end_date':'','tenant':'','tenant_name':'','agreement_start':'','agreement_end':'',
+			'subscription_end_date':'','agreement_start':'','agreement_end':'',
 			'agreement_tenure':'','rent_amount':'' ,'rent_auto_deduct':''
 			}
 	pro=frappe.get_doc('Project',project)
@@ -114,8 +119,6 @@ def get_fields(project):
 			'subscription_plan':plan,
 			'subscription_start_date':sub.current_invoice_start,
 			'subscription_end_date':sub.current_invoice_end,
-			'tenant':pro.property_tenant,
-			'tenant_name':pro.tenant_name,
 			'agreement_start':pro.agreement_start_date,
 			'agreement_end':pro.agreement_end_date,
 			'agreement_tenure':pro.agreement_tenure,
