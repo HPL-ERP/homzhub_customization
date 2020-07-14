@@ -56,12 +56,14 @@
   {
    "fieldname": "agreement_start",
    "fieldtype": "Date",
-   "label": "Agreement Start"
+   "label": "Agreement Start",
+   "read_only": 1
   },
   {
    "fieldname": "agreement_end",
    "fieldtype": "Date",
-   "label": "Agreement End"
+   "label": "Agreement End",
+   "read_only": 1
   },
   {
    "depends_on": "eval:doc.rent_auto_deduct == \"1\"",
@@ -88,12 +90,14 @@
   {
    "fieldname": "agreement_tenure",
    "fieldtype": "Int",
-   "label": "Agreement Tenure"
+   "label": "Agreement Tenure",
+   "read_only": 1
   },
   {
    "fieldname": "rent_amount",
    "fieldtype": "Data",
-   "label": "Rent Amount"
+   "label": "Rent Amount",
+   "read_only": 1
   },
   {
    "fieldname": "accounting_section",
@@ -179,7 +183,8 @@
    "default": "0",
    "fieldname": "rent_auto_deduct",
    "fieldtype": "Check",
-   "label": "Rent Auto Deduct"
+   "label": "Rent Auto Deduct",
+   "read_only": 1
   },
   {
    "depends_on": "eval:doc.rent_auto_deduct == \"1\"",
@@ -207,7 +212,8 @@
    "fieldname": "tenant_list",
    "fieldtype": "Table",
    "label": "Tenant List",
-   "options": "Tenant List"
+   "options": "Tenant List",
+   "read_only": 1
   },
   {
    "fieldname": "status",
@@ -217,7 +223,7 @@
    "read_only": 1
   }
  ],
- "modified": "2020-07-14 00:01:53.243464",
+ "modified": "2020-07-14 01:47:17.508397",
  "modified_by": "Administrator",
  "module": "homzhub_customization",
  "name": "Rent Transaction",
