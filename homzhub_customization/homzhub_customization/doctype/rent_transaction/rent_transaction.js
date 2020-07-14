@@ -70,5 +70,17 @@ frappe.ui.form.on('Rent Transaction', {
 		 else{
 			frappe.throw(__("Please Save Document first") )
 		}
+	},
+	rent_recieved(frm){
+		if(!frm.doc.receive_date && frm.doc.rent_recieved==1){
+			frm.set_value('rent_recieved',0)
+			frappe.throw(__("Please Enter Receive Date") )
+		}
+	},
+	rent_transffered(frm){
+		if(!frm.doc.transfer_date && frm.doc.rent_transffered==1){
+			frm.set_value('rent_transffered',0)
+			frappe.throw(__("Please Enter Transfer Date") )
+		}
 	}
 	})

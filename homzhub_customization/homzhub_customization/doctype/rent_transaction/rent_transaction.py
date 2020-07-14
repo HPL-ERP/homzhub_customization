@@ -54,11 +54,12 @@ class RentTransaction(Document):
 		doc.voucher_type="Bank Entry"
 		doc.append("accounts", {
 			"account": "NACH - HAPL",
-			"credit_in_account_currency": flt(self.rent_amount)
+			"debit_in_account_currency": flt(self.rent_amount)
+			
 		})
 		doc.append("accounts", {
 			"account": "HDFC - HAPL",
-			"debit_in_account_currency": flt(self.rent_amount)
+			"credit_in_account_currency": flt(self.rent_amount)
 		
 		})
 		doc.cheque_no=self.transfer_reference_no
