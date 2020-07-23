@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from frappe.utils.data import nowdate, getdate
 import frappe
-from frappe.utils import date_diff, add_months, today
+from frappe.utils import date_diff, add_months, today,add_days
 
 def validate_employee(doc,method):
     for emp in frappe.get_all('Employee',fields=['name','first_name','middle_name','last_name','gender','date_of_birth','date_of_joining']):
@@ -15,4 +15,25 @@ def validate_employee(doc,method):
     diff = (d2 - d1).total_seconds() / 60 / 60 /24 / 365.25
     if diff <= 10:
         frappe.throw("<b>Date Of Birth</b> can't be within last 10 years")
+
+def validate_attendance_request(doc,method):
+    if doc.get("__islocal"):
+        date_list1=[]
+        next_date1=getdate(doc.get('from_date'))
+        date_list1.append(next_date1)
+        while getdate(doc.get('to_date'))!= next_date1:
+            next_date1=add_days(next_date1, 1)
+            date_list1.append(getdate(next_date1))
+
+        date_list2=[]
+        for cust in frappe.get_all('Attendance Request',filters={'employee':doc.employee},fields=['name','from_date','to_date','employee']):
+            next_date2=getdate(cust.get('from_date'))
+            date_list2.append(next_date2)
+            while getdate(cust.get('to_date'))!= next_date2:
+                next_date2=add_days(next_date2, 1)
+                date_list2.append(getdate(next_date2))
+
+            for d in date_list1:
+                if d in date_list2:
+                    frappe.throw("Attendance Request <b><a href='#Form/Attendance Request/{0}'>{0}</a></b> Already exist ".format(cust.name))
             

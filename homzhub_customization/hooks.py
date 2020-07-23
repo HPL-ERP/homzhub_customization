@@ -114,6 +114,9 @@ doc_events = {
 	},
 	"Issue": {
 		"after_insert":"homzhub_customization.homzhub_customization.doctype.auto_share.on_save"
+	},
+	"Attendance Request": {
+		"validate":"homzhub_customization.homzhub_customization.doctype.employee.validate_attendance_request"
 	}
 
 }
