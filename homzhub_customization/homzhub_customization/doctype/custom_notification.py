@@ -106,7 +106,15 @@ def weekly_auto_email():
 def timesheet_auto_email(employee,dates,wk_hr):
     msg=''
     if len(dates)>0:
+        from datetime import date 
         email,name,holiday_list=frappe.db.get_value('Employee',employee,['prefered_email','employee_name','holiday_list'])
+        leave_dates=[]
+        for d in frappe.get_all('Leave Application',filters={'employee':employee,'status':'Approved','docstatus':1},fields=['from_date','to_date']):
+            next_date=getdate(d.get('from_date'))
+            leave_dates.append(next_date.isoformat())
+            while getdate(d.get('to_date'))!= next_date:
+                next_date=add_days(next_date, 1)
+                leave_dates.append(next_date.isoformat())
         msg="""<p>Hi {0}</p><br>""".format(name)
         msg+="""<b>Timesheet Records</b><br>"""
         msg += """</u></b></p><table class='table table-bordered'><tr>
@@ -116,7 +124,7 @@ def timesheet_auto_email(employee,dates,wk_hr):
         for hl in frappe.get_all('Holiday',filters={'parent':holiday_list},fields=['holiday_date']):
             holidays.append(hl.get('holiday_date').strftime("%Y-%m-%d"))
         for d in dates:
-            if d not in holidays:
+            if d not in holidays and d not in leave_dates:
                 hr=0
                 timesheet=''
                 for h in wk_hr:
