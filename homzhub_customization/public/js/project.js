@@ -2,7 +2,8 @@ cur_frm.dashboard.add_transactions([
 	{
 		'items': [
 			'Subscription',
-			'Rent Transaction'
+			'Rent Transaction',
+			'Journal Entry'
 		],
 		'label': 'Others'
 	},
