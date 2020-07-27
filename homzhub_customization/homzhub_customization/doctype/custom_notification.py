@@ -21,6 +21,8 @@ def execute():
             else:
                 start_date='-'
                 end_date='-'
+            if not project:
+                project='-'
             if task and status=='Open':
                 data1.append({'project':project,'task_id':task,'task_name':subject,'start_date':start_date,'end_date':end_date,'status':status,'time':time})
             if task and status=='Overdue':
@@ -35,6 +37,8 @@ def execute():
                 date=date.strftime("%d-%m-%Y")
             else:
                 date='-'
+            if not customer:
+                customer='-'
             if issue and status=='Open':
                 data3.append({'customer':customer,'issue_id':issue,'issue_name':subject,'status':status,'date':date})
         open_issue_send_msg(data3,us)
@@ -45,9 +49,9 @@ def open_task_send_msg(data,us):
         msg="""<p>Hi {0}</p><br>""".format(us.get('full_name'))
         msg+="""<b>{0} Task</b><br>""".format(data[0].get('status'))
         msg += """</u></b></p><table class='table table-bordered'><tr>
-            <th>Task ID</th><th>Subject</th><th>Estimated Hrs</th><th>Expected Start Date</th><th>Expected End Date</th><th>Project</th><th>User</th>"""
+            <th>Task ID</th><th>Subject</th><th>Estimated Hrs</th><th>Expected Start Date</th><th>Expected End Date</th><th>Project</th><th>User Name</th>"""
         for d in data:
-            msg += "<tr><td>" + """<a href="{0}">{1}</a>""".format(get_url_to_form('Task',d.get('task_id') ), str(d.get('task_id'))) + "</td><td>" + str(d.get('task_name')) + "</td><td>" + str(d.get('time')) + "</td><td>" + str(d.get('start_date'))  + "</td><td>" + str(d.get('end_date'))  + "</td><td>"  + """<a href="{0}">{1}</a>""".format(get_url_to_form('Project',d.get('project') ), str(d.get('project'))) + "</td><td>" + str(us.get('name')) + "</td></tr>"
+            msg += "<tr><td>" + """<a href="{0}">{1}</a>""".format(get_url_to_form('Task',d.get('task_id') ), str(d.get('task_id'))) + "</td><td>" + str(d.get('task_name')) + "</td><td>" + str(d.get('time')) + "</td><td>" + str(d.get('start_date'))  + "</td><td>" + str(d.get('end_date'))  + "</td><td>"  + """<a href="{0}">{1}</a>""".format(get_url_to_form('Project',d.get('project') ), str(d.get('project'))) + "</td><td>" + str(us.get('full_name')) + "</td></tr>"
         msg += "</table>"
         frappe.sendmail(recipients=us.email,subject='Task Notification',message = msg)
 
@@ -58,9 +62,9 @@ def overdue_task_send_msg(data,us):
         msg="""<p>Hi {0}</p><br>""".format(us.get('full_name'))
         msg+="""<b>{0} Task</b><br>""".format(data[0].get('status'))
         msg += """</u></b></p><table class='table table-bordered'><tr>
-             <th>Task ID</th><th>Subject</th><th>Expected Start Date</th><th>Expected End Date</th><th>Project</th><th>User</th>"""
+             <th>Task ID</th><th>Subject</th><th>Expected Start Date</th><th>Expected End Date</th><th>Project</th><th>User Name</th>"""
         for d in data:
-            msg += "<tr><td>" + """<a href="{0}">{1}</a>""".format(get_url_to_form('Task',d.get('task_id') ), str(d.get('task_id'))) + "</td><td>" + str(d.get('task_name')) + "</td><td>" + str(d.get('start_date'))  + "</td><td>" + str(d.get('end_date'))  + "</td><td>"  + """<a href="{0}">{1}</a>""".format(get_url_to_form('Project',d.get('project') ), str(d.get('project'))) + "</td><td>" + str(us.get('name')) + "</td></tr>"
+            msg += "<tr><td>" + """<a href="{0}">{1}</a>""".format(get_url_to_form('Task',d.get('task_id') ), str(d.get('task_id'))) + "</td><td>" + str(d.get('task_name')) + "</td><td>" + str(d.get('start_date'))  + "</td><td>" + str(d.get('end_date'))  + "</td><td>"  + """<a href="{0}">{1}</a>""".format(get_url_to_form('Project',d.get('project') ), str(d.get('project'))) + "</td><td>" + str(us.get('full_name')) + "</td></tr>"
         msg += "</table>"
         frappe.sendmail(recipients=us.email,subject='Task Notification',message = msg)
 
@@ -70,9 +74,12 @@ def open_issue_send_msg(data,us):
         msg="""<p>Hi {0}</p><br>""".format(us.get('full_name'))
         msg+="""<b>{0} Issue</b><br>""".format(data[0].get('status'))
         msg += """</u></b></p><table class='table table-bordered'><tr>
-            <th>Issue ID</th><th>Subject</th><th>Date</th><th>Customer</th>/"""
+            <th>Issue ID</th><th>Subject</th><th>Date</th><th>Customer</th><th>Project</th>"""
         for d in data:
-            msg += "<tr><td>" + """<a href="{0}">{1}</a>""".format(get_url_to_form('Issue',d.get('issue_id') ), str(d.get('issue_id'))) + "</td><td>" + str(d.get('issue_name')) + "</td><td>" + str(d.get('date'))  + "</td><td>"  + """<a href="{0}">{1}</a>""".format(get_url_to_form('Customer',d.get('customer') ), str(d.get('customer'))) + "</td></tr>"
+            project=frappe.db.get_value('Issue',d.get('issue_id'),'project')
+            if not project:
+                project='-'
+            msg += "<tr><td>" + """<a href="{0}">{1}</a>""".format(get_url_to_form('Issue',d.get('issue_id') ), str(d.get('issue_id'))) + "</td><td>" + str(d.get('issue_name')) + "</td><td>" + str(d.get('date'))  + "</td><td>"  + """<a href="{0}">{1}</a>""".format(get_url_to_form('Customer',d.get('customer') ), str(d.get('customer'))) + "</td><td>"  + """<a href="{0}">{1}</a>""".format(get_url_to_form('Project',project ), str(project)) + "</td></tr>"
         msg += "</table>"
         frappe.sendmail(recipients=us.email,subject='Issue Notification',message = msg)
 
@@ -118,7 +125,7 @@ def timesheet_auto_email(employee,dates,wk_hr):
         msg="""<p>Hi {0}</p><br>""".format(name)
         msg+="""<b>Timesheet Records</b><br>"""
         msg += """</u></b></p><table class='table table-bordered'><tr>
-            <th>Date</th><th>Timesheet</th><th>Total Hours</th><th>Actual Hours</th>"""
+            <th>Date</th><th>Timesheet</th><th>Actual Hours</th>"""
         holidays=[]
         from datetime import datetime
         for hl in frappe.get_all('Holiday',filters={'parent':holiday_list},fields=['holiday_date']):
@@ -131,13 +138,6 @@ def timesheet_auto_email(employee,dates,wk_hr):
                     if h.get(d):
                         timesheet=frappe.db.get_value('Timesheet',{'employee':employee,'start_date':d},'name')
                         hr=h.get(d)
-                msg += "<tr><td>" + str(d) + "</td><td>" + """<a href="{0}">{1}</a>""".format(get_url_to_form('Timesheet',str(timesheet) ), str(timesheet)) + "</td><td>" + '8' + "</td><td>" + str(hr)  + "</td></tr>"
+                msg += "<tr><td>" + str(d) + "</td><td>" + """<a href="{0}">{1}</a>""".format(get_url_to_form('Timesheet',str(timesheet) ), str(timesheet)) + "</td><td>" + str(hr)  + "</td></tr>"
         msg += "</table>"
         frappe.sendmail(recipients=email,subject='Timesheet Notification',message = msg)
-        
-            
-
-
-
-
-
