@@ -108,8 +108,9 @@ doc_events = {
 	},
 	"Subscription": {
 		"on_change":["homzhub_customization.homzhub_customization.doctype.sales_invoice.execute",
-		"homzhub_customization.homzhub_customization.doctype.invoice_date.set_date"
-		]
+		"homzhub_customization.homzhub_customization.doctype.invoice_date.set_date",
+		],
+		"validate":"homzhub_customization.homzhub_customization.doctype.sales_invoice.update_status"
 	},
 	"Task": {
 		"after_insert":"homzhub_customization.homzhub_customization.doctype.auto_share.on_save"

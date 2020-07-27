@@ -138,6 +138,10 @@ def get_subscription_updates(name):
 	else:
 		subscription.process()
 
+def update_status(doc,method):
+	if len(doc.get('invoices'))<1:
+		frappe.db.set_value('Subscription',doc.name,'status','Active')
+
 
 
 
