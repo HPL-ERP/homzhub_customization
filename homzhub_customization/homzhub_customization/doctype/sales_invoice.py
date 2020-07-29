@@ -34,13 +34,13 @@ def get_items_from_plans(doc, plans, prorate=0):
 	customer = doc.customer
 	for plan in plans:
 		item_code = frappe.db.get_value("Subscription Plan", plan.plan, "item")
-		rate,srv_chg=get_plan_rate(doc,plan.plan, plan.qty, customer)
 		if doc.custom_rate>0:
 			if not prorate:
 				items.append({'item_code': item_code, 'qty': plan.qty, 'rate': doc.custom_rate})
 			else:
 				items.append({'item_code': item_code, 'qty': plan.qty, 'rate': (doc.custom_rate * prorate_factor)})
 		else:
+			rate,srv_chg=get_plan_rate(doc,plan.plan, plan.qty, customer)
 			if not prorate:
 				items.append({'item_code': item_code, 'qty': plan.qty, 'rate': rate,'service_charges_in_per':srv_chg})
 			else:
