@@ -139,7 +139,7 @@ def get_subscription_updates(name):
 		subscription.process()
 
 def update_status(doc,method):
-	if len(doc.get('invoices'))<1 and doc.status=='Past Due Date':
+	if len(doc.get('invoices'))<1 and doc.status=='Past Due Date' or doc.status=='Unpaid':
 		doc.status='Active'
 
 
