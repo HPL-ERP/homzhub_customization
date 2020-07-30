@@ -3,7 +3,8 @@ import frappe
 from erpnext.accounts.doctype.accounting_dimension.accounting_dimension import get_accounting_dimensions
 from erpnext.accounts.doctype.subscription_plan.subscription_plan import get_plan_rate
 from frappe.utils.data import nowdate, getdate, cint, add_days, date_diff, get_last_day, add_to_date, flt
-from erpnext.accounts.doctype.subscription.subscription import process
+from homzhub_customization.homzhub_customization.doctype.subscription import process
+# from erpnext.accounts.doctype.subscription.subscription import process
 	
 def get_plan_rate(doc,plan, quantity=1, customer=None):
 	rate=0
@@ -136,13 +137,9 @@ def get_subscription_updates(name):
 	elif subscription.custom_rate>0:
 		generate_sales_invoice(subscription)
 	else:
-		subscription.process()
+		process(subscription)
 
 def update_status(doc,method):
-	if len(doc.get('invoices'))<1 and doc.statusi in ['Past Due Date','Unpaid']:
+	if len(doc.get('invoices'))<1 and doc.status in ['Past Due Date','Unpaid']:
 		doc.status='Active'
 
-
-
-
-		
