@@ -110,7 +110,7 @@ def has_outstanding_invoice(doc):
     if not current_invoice:
         return False
     else:
-        return not is_not_outstanding(doc,current_invoice)
+        return not is_not_outstanding(current_invoice)
 
 def create_invoice(doc, prorate):
     """
