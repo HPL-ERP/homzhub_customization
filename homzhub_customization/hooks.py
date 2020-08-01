@@ -107,9 +107,6 @@ doc_events = {
 		"validate":"homzhub_customization.homzhub_customization.doctype.employee.validate_employee"
 	},
 	"Subscription": {
-		"on_change":["homzhub_customization.homzhub_customization.doctype.sales_invoice.execute",
-		"homzhub_customization.homzhub_customization.doctype.invoice_date.set_date",
-		],
 		"validate":"homzhub_customization.homzhub_customization.doctype.sales_invoice.update_status"
 	},
 	"Task": {

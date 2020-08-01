@@ -120,7 +120,10 @@ def create_invoice(doc, prorate):
     invoice.set_posting_time = 1
     invoice.posting_date = doc.current_invoice_start
     invoice.customer = doc.customer
-
+    invoice.subscription=doc.name
+    invoice.project=doc.project
+    if doc.invoice_date and invoice.posting_date!=doc.invoice_date:
+        invoice.posting_date=doc.invoice_date
     ## Add dimesnions in invoice for subscription:
     accounting_dimensions = get_accounting_dimensions()
 

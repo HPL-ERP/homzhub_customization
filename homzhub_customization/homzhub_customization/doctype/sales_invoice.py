@@ -16,13 +16,13 @@ def get_plan_rate(doc,plan, quantity=1, customer=None):
 			rate+=(int(table.to_month)-int(table.from_month)+1)*int(table.rent)
 	return rate*(int(plan.rate)/100),plan.rate
 
-def execute(doc,method):
-	set_project_and_subscription_to_invoice(doc,method)
+# def execute(doc,method):
+# 	set_project_and_subscription_to_invoice(doc,method)
 
-def set_project_and_subscription_to_invoice(doc,method):
-	for d in doc.invoices:
-		frappe.db.set_value('Sales Invoice',d.invoice,'project',doc.project)
-		frappe.db.set_value('Sales Invoice',d.invoice,'subscription',doc.name)
+# def set_project_and_subscription_to_invoice(doc,method):
+# 	for d in doc.invoices:
+# 		frappe.db.set_value('Sales Invoice',d.invoice,'project',doc.project)
+# 		frappe.db.set_value('Sales Invoice',d.invoice,'subscription',doc.name)
 
 def get_items_from_plans(doc, plans, prorate=0):
 	"""
@@ -140,6 +140,9 @@ def get_subscription_updates(name):
 		process(subscription)
 
 def update_status(doc,method):
+	if doc.get('__islocal') and doc.invoice_date:
+		doc.current_invoice_start=doc.invoice_date
+
 	if len(doc.get('invoices'))<1 and doc.status in ['Past Due Date','Unpaid']:
 		doc.status='Active'
 
