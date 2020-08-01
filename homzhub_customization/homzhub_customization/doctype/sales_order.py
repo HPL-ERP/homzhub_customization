@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 import frappe
 import json
+from frappe.utils.data import flt
 
 @frappe.whitelist()
 def get_rent_distribution_table(docname,doctype):
@@ -47,7 +48,7 @@ def item_table_calculation(doc):
 		rate=int(doc.get('property_rent'))*int(doc.get('agreement_tenure'))	
 	if doc.get('rent_distribution'):
 		for table in doc.get('rent_distribution'):
-			rate+=(int(table.get('to_month'))-int(table.get('from_month'))+1)*int(table.get('rent'))
+			rate+=(int(table.get('to_month'))-int(table.get('from_month'))+1)*flt(table.get('rent'))
 	item_list=[]
 	for d in doc.get('items'):
 		if d.get('service_charges_in_per'):
