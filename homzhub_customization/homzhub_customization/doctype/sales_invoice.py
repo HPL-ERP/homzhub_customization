@@ -132,12 +132,12 @@ def get_subscription_updates(name):
 	Use this to get the latest state of the given `Subscription`
 	"""
 	subscription = frappe.get_doc('Subscription', name)
-	if frappe.db.get_value('Subscription Plan',subscription.plans[0].plan,'price_determination')=='Percentage of Rent' and len(subscription.plans)<2:
-		generate_sales_invoice(subscription)
-	elif subscription.custom_rate>0 and len(subscription.plans)<2:
-		generate_sales_invoice(subscription)
-	else:
-		process(subscription)
+	# if frappe.db.get_value('Subscription Plan',subscription.plans[0].plan,'price_determination')=='Percentage of Rent':
+	# 	generate_sales_invoice(subscription)
+	# elif subscription.custom_rate>0 and len(subscription.plans)<2:
+	# 	generate_sales_invoice(subscription)
+	# else:
+	process(subscription)
 
 def update_status(doc,method):
 	if doc.get('__islocal') and doc.invoice_date:
