@@ -18,6 +18,13 @@ def validate_employee(doc,method):
 
 def validate_attendance_request(doc,method):
     if doc.get("__islocal"):
+        import datetime
+        now = datetime.datetime.now()
+        today8am = now.replace(hour=8, minute=45, second=0, microsecond=0)
+        today3pm = now.replace(hour=3, minute=0, second=0, microsecond=0)
+        roles = frappe.get_roles(frappe.session.user)
+        if not (today8am < now  and  now > today3pm) and "HR Manager" not in roles: 
+            frappe.throw("Please raise your attendace request between 8:45 AM to 3 PM")
         date_list1=[]
         next_date1=getdate(doc.get('from_date'))
         date_list1.append(next_date1)
@@ -36,4 +43,5 @@ def validate_attendance_request(doc,method):
             for d in date_list1:
                 if d in date_list2:
                     frappe.throw("Attendance Request <b><a href='#Form/Attendance Request/{0}'>{0}</a></b> Already exist ".format(cust.name))
+        
             
