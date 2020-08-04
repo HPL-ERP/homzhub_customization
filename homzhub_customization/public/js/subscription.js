@@ -9,7 +9,6 @@ frappe.ui.form.on('Subscription', {
 				doctype:"Sales Order"	
 			},
 			callback: function (data) {
-				console.log(data.message)
 				if (Array.isArray(data.message)){
 					$.each(data.message[0] || [], function (i, v) {
 						var d = cur_frm.add_child("rent_distribution")
@@ -56,6 +55,10 @@ frappe.ui.form.on('Subscription', {
 			}
 		})
 	}
+	frappe.db.get_value("Project", {"name":frm.doc.project},["agreement_start_date","agreement_end_date"], function(r){
+		frm.set_value('agreement_start_date',r.agreement_start_date)
+		frm.set_value('agreement_end_date',r.agreement_end_date)
+		})
 	},
 	refresh: function(frm) {
 		if(!frm.is_new()){
