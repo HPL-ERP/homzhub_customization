@@ -13,7 +13,7 @@ def get_plan_rate(doc,plan, quantity=1, customer=None):
 		rate=int(doc.property_rent)*int(doc.agreement_tenure)	
 	if doc.rent_distribution:
 		for table in doc.rent_distribution:
-			rate+=(int(table.to_month)-int(table.from_month)+1)*int(table.rent)
+			rate+=(int(table.to_month)-int(table.from_month)+1)*flt(table.rent)
 	return rate*(int(plan.rate)/100),plan.rate
 
 # def execute(doc,method):
