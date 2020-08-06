@@ -107,7 +107,8 @@ doc_events = {
 		"validate":"homzhub_customization.homzhub_customization.doctype.employee.validate_employee"
 	},
 	"Subscription": {
-		"validate":"homzhub_customization.homzhub_customization.doctype.sales_invoice.update_status"
+		"validate":["homzhub_customization.homzhub_customization.doctype.sales_invoice.update_status",
+		"homzhub_customization.homzhub_customization.doctype.subscription.validate"]
 	},
 	"Task": {
 		"after_insert":"homzhub_customization.homzhub_customization.doctype.auto_share.on_save"
