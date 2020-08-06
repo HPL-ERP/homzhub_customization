@@ -118,7 +118,7 @@ doc_events = {
 	},
 	"Attendance Request": {
 		"validate":["homzhub_customization.homzhub_customization.doctype.employee.validate_attendance_request",
-			"homzhub_customization.homzhub_customization.doctype.employee.validate_time"]
+			"homzhub_customization.homzhub_customization.doctype.employee.validate_attendance_time"]
 	}
 
 }
