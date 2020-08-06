@@ -124,6 +124,8 @@ def create_invoice(doc, prorate):
 	invoice.project=doc.project
 	if doc.invoice_date and invoice.posting_date!=doc.invoice_date:
 		invoice.posting_date=doc.invoice_date
+		if doc.invoice_due_days:
+			invoice.due_date=add_days(doc.invoice_date,doc.invoice_due_days)
 	## Add dimesnions in invoice for subscription:
 	accounting_dimensions = get_accounting_dimensions()
 
