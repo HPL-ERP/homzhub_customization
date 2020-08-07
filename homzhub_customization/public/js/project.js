@@ -72,6 +72,9 @@ frappe.ui.form.on('Project', {
 			frm.set_value('varying_rent',0)
 		}
 	},
+	agreement_start_date:function(frm){
+		frm.set_value('lock_in_period_start',frm.doc.agreement_start_date)
+	}
 
 })
 frappe.ui.form.on("Tenant List", "tenant", function(frm, cdt, cdn) {

@@ -84,6 +84,11 @@ frappe.ui.form.on('Subscription', {
 				}
 			}
 		});
+	},
+	customer:function(frm){
+		frappe.db.get_value("Customer", {"name":frm.doc.customer},"customer_name", function(r){
+        	frm.set_value("customer_name",r.customer_name)
+		})
 	}
 
 })
