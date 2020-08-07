@@ -1,0 +1,37 @@
+{
+ "creation": "2020-08-07 23:07:54.972489",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "buyer",
+  "buyer_name"
+ ],
+ "fields": [
+  {
+   "fieldname": "buyer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Buyer",
+   "options": "Lead"
+  },
+  {
+   "fieldname": "buyer_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Buyer Name",
+   "read_only": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-08-07 23:09:34.027133",
+ "modified_by": "Administrator",
+ "module": "homzhub_customization",
+ "name": "Buyer List",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
