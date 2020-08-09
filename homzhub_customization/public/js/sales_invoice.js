@@ -19,9 +19,7 @@ validate:function(frm){
 	}
 },
 is_selling_property_:function(frm){
-	// console.log('*********',frm.doc.is_selling_property_)
 		if (frm.doc.is_selling_property_==1){
-			console.log('*********',frm.doc.project)
 			 frappe.db.get_value("Project", {"name":frm.doc.project},"property_rate", function(r){
 	      	 frm.set_value('property_rate',r.property_rate)
 			})
@@ -36,6 +34,20 @@ project:function(frm){
 	      	 frm.set_value('property_address',r.property_address)
 	      	 frm.set_value('property_address_detail',r.address_detail)
 	})
+},
+property_address: function(frm){
+	frm.set_value('address_detail', "");
+	if (frm.doc.property_address!=undefined){
+	frappe.call({
+		method: "frappe.contacts.doctype.address.address.get_address_display",
+		args: {"address_dict": frm.doc.property_address},
+		callback: function(r) {
+			if(r.message) {
+				frm.set_value('property_address_detail', r.message);
+			}
+		}
+	});
 }
+},
 
 })

@@ -137,7 +137,8 @@ def get_subscription_updates(name):
 	# elif subscription.custom_rate>0 and len(subscription.plans)<2:
 	# 	generate_sales_invoice(subscription)
 	# else:
-	process(subscription)
+	if subscription.create_inv==1:
+		process(subscription)
 
 def update_status(doc,method):
 	if doc.get('__islocal') and doc.invoice_date:

@@ -76,17 +76,17 @@ frappe.ui.form.on('Project', {
 	agreement_start_date:function(frm){
 		frm.set_value('lock_in_period_start',frm.doc.agreement_start_date)
 	},
-	main_buyer:function(frm){
-		frappe.db.get_value('Lead', {name: frm.doc.main_buyer}, ['lead_name','company_name'], (r) => {
-			if(r.lead_name){
-			frm.set_value('main_buyer_name',r.lead_name)
-			}
-			else{
-				frm.set_value('main_buyer_name',r.company_name)
-			}
+	// main_buyer:function(frm){
+	// 	frappe.db.get_value('Lead', {name: frm.doc.main_buyer}, ['lead_name','company_name'], (r) => {
+	// 		if(r.lead_name){
+	// 		frm.set_value('main_buyer_name',r.lead_name)
+	// 		}
+	// 		else{
+	// 			frm.set_value('main_buyer_name',r.company_name)
+	// 		}
 		
-	})
-	}
+	// })
+	// }
 
 })
 frappe.ui.form.on("Tenant List", "tenant", function(frm, cdt, cdn) {
@@ -111,3 +111,16 @@ frappe.ui.form.on("Buyer List", "buyer", function(frm, cdt, cdn) {
 
 });
 
+frappe.ui.form.on("Buyer List", "buyer", function(frm, cdt, cdn) {
+	var d = locals[cdt][cdn];
+	frappe.db.get_value('Lead', {name: d.buyer}, ['lead_name','company_name'], (r) => {
+		if(r.lead_name){
+			d.buyer_name = r.lead_name
+		}
+		else{
+			d.buyer_name = r.company_name
+		}
+		refresh_field("buyer_name", d.name, d.parentfield);
+	})
+
+});
