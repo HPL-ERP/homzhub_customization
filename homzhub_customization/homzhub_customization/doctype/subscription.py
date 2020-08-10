@@ -56,7 +56,7 @@ def is_postpaid_to_invoice(doc):
 		not has_outstanding_invoice(doc)
 
 def is_prepaid_to_invoice(doc):
-	if not doc.generate_invoice_at_period_start:
+	if not doc.create_inv:
 		return False
 
 	if is_new_subscription(doc):
