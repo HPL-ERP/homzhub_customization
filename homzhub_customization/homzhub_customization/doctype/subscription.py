@@ -122,9 +122,13 @@ def create_invoice(doc, prorate):
 	invoice.customer = doc.customer
 	invoice.subscription=doc.name
 	invoice.project=doc.project
+	print('**********************',invoice.posting_date)
 	if doc.invoice_date and invoice.posting_date!=doc.invoice_date:
+		print('$$$$$$$$$$$$$')
 		invoice.posting_date=doc.invoice_date
 		if doc.invoice_due_days:
+			print('####',doc.invoice_date,doc.invoice_due_days)
+			print(add_days(doc.invoice_date,doc.invoice_due_days))
 			invoice.due_date=add_days(doc.invoice_date,doc.invoice_due_days)
 	## Add dimesnions in invoice for subscription:
 	accounting_dimensions = get_accounting_dimensions()
@@ -150,7 +154,7 @@ def create_invoice(doc, prorate):
 	invoice.append(
 		'payment_schedule',
 		{
-			'due_date': add_days(doc.current_invoice_end, cint(doc.days_until_due)),
+			'due_date': invoice.due_date,
 			'invoice_portion': 100
 		}
 	)
