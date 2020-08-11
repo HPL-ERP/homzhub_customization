@@ -17,16 +17,17 @@ class RentTransaction(Document):
 				if frappe.db.get_value('Journal Entry',ent.account_entries,'user_remark')==user_remark.rstrip(','):
 					frappe.throw('Receive Rent Document Already Exist')
 					break
-
+		if not self.recieved_amount or self.recieved_amount<=0:
+			frappe.throw('<b>Recieved Amount</b> must be greater than <b>0</b>')
 		doc=frappe.new_doc('Journal Entry')
 		doc.voucher_type="Bank Entry"
 		doc.append("accounts", {
 			"account": "NACH - HAPL",
-			"credit_in_account_currency": flt(self.rent_amount)
+			"credit_in_account_currency": flt(self.recieved_amount)
 		})
 		doc.append("accounts", {
 			"account": "HDFC - HAPL",
-			"debit_in_account_currency": flt(self.rent_amount)
+			"debit_in_account_currency": flt(self.recieved_amount)
 		
 		})
 		doc.cheque_no=self.received_reference_no
@@ -50,16 +51,18 @@ class RentTransaction(Document):
 				if frappe.db.get_value('Journal Entry',d.account_entries,'user_remark')=="Rent Transfer To "+self.owner_name:
 					frappe.throw('Transffered Rent Document Already Exist')
 					break
+		if not self.transfer_amount or self.transfer_amount<=0:
+			frappe.throw('<b>Transfer Amount</b> must be greater than <b>0</b>')
 		doc=frappe.new_doc('Journal Entry')
 		doc.voucher_type="Bank Entry"
 		doc.append("accounts", {
 			"account": "NACH - HAPL",
-			"debit_in_account_currency": flt(self.rent_amount)
+			"debit_in_account_currency": flt(self.transfer_amount)
 			
 		})
 		doc.append("accounts", {
 			"account": "HDFC - HAPL",
-			"credit_in_account_currency": flt(self.rent_amount)
+			"credit_in_account_currency": flt(self.transfer_amount)
 		
 		})
 		doc.cheque_no=self.transfer_reference_no
@@ -74,6 +77,7 @@ class RentTransaction(Document):
 			"account_entries":doc.name
 		})
 		self.save()
+
 def create_document():
 	from datetime import date
 	today = date.today()
@@ -111,7 +115,7 @@ def get_fields(project):
 	pro=frappe.get_doc('Project',project)
 	for sub in frappe.get_all('Subscription',filters={'project':project},fields=['name','current_invoice_start','current_invoice_end','rent_auto_deduct']):
 		plan=frappe.db.get_value('Subscription Plan Detail',{'parent':sub.name},'plan')
-		if plan and plan == 'Homzhub Comfort':
+		if plan and plan in ['Homzhub Comfort','Homzhub Tenant Care']:
 			fields={
 			'subscription':sub.name,
 			'owner':pro.property_owner,

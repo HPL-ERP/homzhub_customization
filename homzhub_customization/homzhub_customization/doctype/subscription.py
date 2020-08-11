@@ -118,18 +118,14 @@ def create_invoice(doc, prorate):
 	"""
 	invoice = frappe.new_doc('Sales Invoice')
 	invoice.set_posting_time = 1
-	invoice.posting_date = doc.current_invoice_start
+	# invoice.posting_date = doc.current_invoice_start
 	invoice.customer = doc.customer
 	invoice.subscription=doc.name
 	invoice.project=doc.project
-	print('**********************',invoice.posting_date)
-	if doc.invoice_date and invoice.posting_date!=doc.invoice_date:
-		print('$$$$$$$$$$$$$')
-		invoice.posting_date=doc.invoice_date
-		if doc.invoice_due_days:
-			print('####',doc.invoice_date,doc.invoice_due_days)
-			print(add_days(doc.invoice_date,doc.invoice_due_days))
-			invoice.due_date=add_days(doc.invoice_date,doc.invoice_due_days)
+	# if doc.invoice_date and invoice.posting_date!=doc.invoice_date:
+	invoice.posting_date=doc.invoice_date if doc.invoice_date else doc.current_invoice_start
+	if doc.invoice_due_days:
+		invoice.due_date=add_days(invoice.posting_date,doc.invoice_due_days)
 	## Add dimesnions in invoice for subscription:
 	accounting_dimensions = get_accounting_dimensions()
 
