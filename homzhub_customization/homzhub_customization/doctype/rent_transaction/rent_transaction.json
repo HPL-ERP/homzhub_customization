@@ -28,11 +28,13 @@
   "accounting_section",
   "receive_rent",
   "received_reference_no",
+  "recieved_amount",
   "receive_date",
   "rent_recieved",
   "column_break_17",
   "transfer_rent",
   "transfer_reference_no",
+  "transfer_amount",
   "transfer_date",
   "rent_transffered",
   "section_break_21",
@@ -224,9 +226,19 @@
    "label": "Status",
    "options": "\nRent Received\nRent Transffered",
    "read_only": 1
+  },
+  {
+   "fieldname": "recieved_amount",
+   "fieldtype": "Float",
+   "label": "Recieved Amount"
+  },
+  {
+   "fieldname": "transfer_amount",
+   "fieldtype": "Float",
+   "label": "Transfer Amount"
   }
  ],
- "modified": "2020-08-08 00:28:42.265141",
+ "modified": "2020-08-11 23:37:34.343606",
  "modified_by": "Administrator",
  "module": "homzhub_customization",
  "name": "Rent Transaction",
