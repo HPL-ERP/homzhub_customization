@@ -122,6 +122,10 @@ def create_invoice(doc, prorate):
 	invoice.customer = doc.customer
 	invoice.subscription=doc.name
 	invoice.project=doc.project
+	invoice.agreement_start_date=doc.agreement_start_date
+	invoice.agreement_end_date=doc.agreement_end_date
+	invoice.property_rent=doc.property_rent
+	invoice.tenure=doc.agreement_tenure
 	# if doc.invoice_date and invoice.posting_date!=doc.invoice_date:
 	invoice.posting_date=doc.invoice_date if doc.invoice_date else doc.current_invoice_start
 	if doc.invoice_due_days:
