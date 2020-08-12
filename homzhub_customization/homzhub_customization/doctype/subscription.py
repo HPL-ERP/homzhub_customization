@@ -245,5 +245,11 @@ def validate(doc,method):
 		if  getdate(expected_date) > getdate(doc.get('invoice_date')):
 			frappe.throw("<b>Invoice Date</b> must be equal or greater than project's <b>Expected Start Date</b>")
 	if doc.get('customer') and doc.get('project'):
-		if doc.get('customer') !=frappe.db.get_value('Project',doc.get('project'),'customer'):
+		project=frappe.get_doc('Project',doc.get('project'))
+		customer_list=[]
+		customer_list.append(project.customer)
+		customer_list.append(project.property_owner)
+		for d in project.tenant_list:
+			customer_list.append(d.tenant)
+		if doc.get('customer') not in customer_list:
 			frappe.throw("<b>Project's customer</b> and <b>Subscription customer</b> must be equal")

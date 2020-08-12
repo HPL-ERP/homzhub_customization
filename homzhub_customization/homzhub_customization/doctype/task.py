@@ -10,6 +10,6 @@ def validate(doc,method):
 		for d in project.tenant_list:
 			doc.append("tenant_list",{'tenant':d.tenant,'tenant_name':d.tenant_name})
 		doc.project_address=project.property_address
-		doc.address_details=get_address_display({"address_dict": doc.property_address})
+		doc.address_details=get_address_display({"address_dict": project.property_address})
 		doc.agreement_start_=project.agreement_start_date
 		doc.agreement_end=project.agreement_end_date
