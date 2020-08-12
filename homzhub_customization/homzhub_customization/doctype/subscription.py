@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 import frappe
+import json
 from frappe.model.document import Document
 from erpnext.accounts.doctype.accounting_dimension.accounting_dimension import get_accounting_dimensions
 
@@ -252,4 +253,12 @@ def validate(doc,method):
 		for d in project.tenant_list:
 			customer_list.append(d.tenant)
 		if doc.get('customer') not in customer_list:
-			frappe.throw("<b>Project's customer</b> and <b>Subscription customer</b> must be equal")
+			frappe.throw("<b>customer</b> in subscription should be equal to <b>owner</b>/<b>tenant list</b>/<b>customer</b>")
+
+@frappe.whitelist()
+def update_status(doc):
+	doc=json.loads(doc)
+	doc=frappe.get_doc('Subscription',doc.get('name'))
+	doc.status='Cancelled'
+	doc.cancelation_date = nowdate()
+	doc.save()

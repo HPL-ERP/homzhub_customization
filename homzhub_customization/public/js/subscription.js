@@ -63,6 +63,19 @@ frappe.ui.form.on('Subscription', {
 	refresh: function(frm) {
 		if(!frm.is_new()){
 			if(frm.doc.status !== 'Cancelled'){
+				frm.remove_custom_button("Cancel Subscription")
+				frm.add_custom_button('Cancel Subscription', () => {
+					frappe.call({
+						method:"homzhub_customization.homzhub_customization.doctype.subscription.update_status" ,
+						args: {
+							'doc': frm.doc
+						},
+						callback: function(r) {
+							frm.reload_doc();
+						}
+					});
+	
+				})
 				frm.remove_custom_button('Fetch Subscription Updates')
 				frm.add_custom_button(
 					__('Fetch Subscription Updates'),
