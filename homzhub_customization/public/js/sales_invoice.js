@@ -30,13 +30,16 @@ is_selling_property_:function(frm){
 
 },
 project:function(frm){
-	frappe.db.get_value("Project", {"name":frm.doc.project},["property_address","address_detail"], function(r){
-	      	 frm.set_value('property_address',r.property_address)
-	      	 frm.set_value('property_address_detail',r.address_detail)
+	frappe.db.get_value("Project", {"name":frm.doc.project},["property_address","address_detail","agreement_start_date","agreement_end_date","property_rent","agreement_tenure"], function(r){
+	      	frm.set_value('property_address',r.property_address)
+			frm.set_value('property_address_detail',r.address_detail)
+			frm.set_value('agreement_start_date',r.agreement_start_date)
+			frm.set_value('agreement_end_date',r.agreement_end_date)
+			frm.set_value('tenure',r.agreement_tenure)
 	})
 },
 property_address: function(frm){
-	frm.set_value('address_detail', "");
+	frm.set_value('property_address_detail', "");
 	if (frm.doc.property_address!=undefined){
 	frappe.call({
 		method: "frappe.contacts.doctype.address.address.get_address_display",
@@ -49,5 +52,33 @@ property_address: function(frm){
 	});
 }
 },
+onload:function(frm){
+	if(frm.doc.sales_order==undefined && frm.doc.project!=undefined && frm.doc.__islocal){
+		frappe.call({
+			method:
+			"homzhub_customization.homzhub_customization.doctype.sales_order.get_rent_distribution_table",
+			args: {
+				docname: frm.doc.project,
+				doctype:"Project"
+				
+			},
+			callback: function (data) {
+				if (Array.isArray(data.message)){
+					$.each(data.message[0] || [], function (i, v) {
+						var d = cur_frm.add_child("rent_distribution")
+						d.from_month = v.from_month
+						d.to_month = v.to_month
+						d.rent = v.rent
+					})
+					cur_frm.refresh_field("rent_distribution")
+				}
+				else{
+					frm.set_value('property_rent',data.message.rent)
+				}
+	
+			}
+		})
+	}
+}
 
 })
