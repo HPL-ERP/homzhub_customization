@@ -14,3 +14,11 @@ def validate_dates(doc,method):
 
     if doc.get('lock_in_period_start'):
     	doc.lock_in_period_end=add_months(doc.get('lock_in_period_start'),doc.get('lock_in_period'))
+
+@frappe.whitelist()
+def fetch_inventory_table(address):
+    doc=frappe.get_doc('Address',address)
+    items=[]
+    for d in doc.inventory_details:
+        items.append({'asset':d.asset,'quantity':d.quantity,'description':d.description})
+    return items

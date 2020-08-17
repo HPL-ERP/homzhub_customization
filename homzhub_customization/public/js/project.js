@@ -53,6 +53,24 @@ frappe.ui.form.on('Project', {
 				}
 			}
 		});
+		frappe.call({
+			method:
+			"homzhub_customization.homzhub_customization.doctype.project.fetch_inventory_table",
+			args: {
+				address: frm.doc.property_address,
+			},
+			callback: function (data) {
+				if (data.message){
+					$.each(data.message, function (i, v) {
+						var d = cur_frm.add_child("inventory_list")
+						d.asset = v.asset
+						d.quantity=v.quantity
+						d.description=v.description
+					})
+					cur_frm.refresh_field("inventory_list")
+				}	
+			}
+		})
 	}
 	},
 	fixed_rent:function(frm){
@@ -76,17 +94,6 @@ frappe.ui.form.on('Project', {
 	agreement_start_date:function(frm){
 		frm.set_value('lock_in_period_start',frm.doc.agreement_start_date)
 	},
-	// main_buyer:function(frm){
-	// 	frappe.db.get_value('Lead', {name: frm.doc.main_buyer}, ['lead_name','company_name'], (r) => {
-	// 		if(r.lead_name){
-	// 		frm.set_value('main_buyer_name',r.lead_name)
-	// 		}
-	// 		else{
-	// 			frm.set_value('main_buyer_name',r.company_name)
-	// 		}
-		
-	// })
-	// }
 
 })
 frappe.ui.form.on("Tenant List", "tenant", function(frm, cdt, cdn) {
@@ -121,6 +128,18 @@ frappe.ui.form.on("Buyer List", "buyer", function(frm, cdt, cdn) {
 			d.buyer_name = r.company_name
 		}
 		refresh_field("buyer_name", d.name, d.parentfield);
+	})
+
+});
+frappe.ui.form.on("Project Participants", "user", function(frm, cdt, cdn) {
+	var d = locals[cdt][cdn];
+	frappe.db.get_value('Employee', {user_id: d.user}, ['name','employee_name','designation'], (r) => {
+		d.employee=r.name
+		d.employee_name=r.employee_name
+		d.designation=r.designation
+		refresh_field("employee", d.name, d.parentfield);
+		refresh_field("employee_name", d.name, d.parentfield);
+		refresh_field("designation", d.name, d.parentfield);
 	})
 
 });
