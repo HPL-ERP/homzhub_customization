@@ -38,6 +38,7 @@
   "transfer_date",
   "rent_transffered",
   "section_break_21",
+  "review",
   "payment_entries",
   "amended_from"
  ],
@@ -228,6 +229,7 @@
    "read_only": 1
   },
   {
+   "depends_on": "eval:doc.rent_auto_deduct == \"1\"",
    "fieldname": "recieved_amount",
    "fieldtype": "Float",
    "label": "Recieved Amount"
@@ -236,9 +238,14 @@
    "fieldname": "transfer_amount",
    "fieldtype": "Float",
    "label": "Transfer Amount"
+  },
+  {
+   "fieldname": "review",
+   "fieldtype": "Small Text",
+   "label": "Review"
   }
  ],
- "modified": "2020-08-11 23:37:34.343606",
+ "modified": "2020-08-14 17:32:49.960607",
  "modified_by": "Administrator",
  "module": "homzhub_customization",
  "name": "Rent Transaction",
