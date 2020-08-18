@@ -94,6 +94,12 @@ frappe.ui.form.on('Project', {
 	agreement_start_date:function(frm){
 		frm.set_value('lock_in_period_start',frm.doc.agreement_start_date)
 	},
+	project_type:function(frm){
+		frm.set_value('cost_center',"")
+		if (frm.doc.project_type=="Property Selling"){
+			frm.set_value('cost_center',"Property Selling - HAPL")
+		}
+	}
 
 })
 frappe.ui.form.on("Tenant List", "tenant", function(frm, cdt, cdn) {
