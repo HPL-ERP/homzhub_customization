@@ -13,17 +13,17 @@ def validate(doc,method):
 		doc.address_details=get_address_display({"address_dict": project.property_address})
 		doc.agreement_start_=project.agreement_start_date
 		doc.agreement_end=project.agreement_end_date
-		from frappe.desk.form import assign_to
-		pro_doc=frappe.get_doc("Project",doc.get('project'))
-		pt_doc=frappe.get_doc('Project Template',pro_doc.project_template)
-		if pro_doc.project_template:
-			for p in pro_doc.participant_list:
-				user_roles=frappe.get_roles(p.user)
-				for d in pt_doc.tasks:
-					if d.role in user_roles:
-						assign_to({
-							"assign_to": p.user,
-							"doctype": "Task",
-							"name": doc.name,
-							"description": doc.subject
-						})
+		# from frappe.desk.form import assign_to
+		# pro_doc=frappe.get_doc("Project",doc.get('project'))
+		# pt_doc=frappe.get_doc('Project Template',pro_doc.project_template)
+		# if pro_doc.project_template:
+		# 	for p in pro_doc.participant_list:
+		# 		user_roles=frappe.get_roles(p.user)
+		# 		for d in pt_doc.tasks:
+		# 			if d.role in user_roles:
+		# 				assign_to({
+		# 					"assign_to": p.user,
+		# 					"doctype": "Task",
+		# 					"name":doc.get('subject'),
+		# 					"description": doc.get('subject')
+		# 				})
