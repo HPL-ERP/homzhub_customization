@@ -22,3 +22,11 @@ def fetch_inventory_table(address):
     for d in doc.inventory_details:
         items.append({'asset':d.asset,'quantity':d.quantity,'description':d.description})
     return items
+
+@frappe.whitelist()
+def fetch_participant_table(designation):
+    users=[]
+    for d in frappe.get_all('Employee',filters={'designation':designation},fields=['name','employee_name','user_id','designation']):
+        if frappe.db.exists('User',d.user_id):
+            users.append(d)
+    return users

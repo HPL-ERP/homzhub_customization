@@ -10,7 +10,7 @@ def get_plan_rate(doc,plan, quantity=1, customer=None):
 	rate=0
 	plan = frappe.get_doc("Subscription Plan", plan)
 	if doc.property_rent:
-		rate=int(doc.property_rent)*int(doc.agreement_tenure)	
+		rate=int(doc.property_rent)*int(plan.billing_interval_count)
 	if doc.rent_distribution:
 		for table in doc.rent_distribution:
 			rate+=(int(table.to_month)-int(table.from_month)+1)*flt(table.rent)

@@ -99,6 +99,29 @@ frappe.ui.form.on('Project', {
 		if (frm.doc.project_type=="Property Selling"){
 			frm.set_value('cost_center',"Property Selling - HAPL")
 		}
+	},
+	default_designation:function(frm){
+		
+		frappe.call({
+			method:
+			"homzhub_customization.homzhub_customization.doctype.project.fetch_participant_table",
+			args: {
+				designation: frm.doc.default_designation,
+			},
+			callback: function (data) {
+				frm.clear_table("participant_list")
+				if (data.message){
+					$.each(data.message, function (i, v) {
+						var d = cur_frm.add_child("participant_list")
+						d.user=v.user_id
+						d.employee=v.name
+						d.employee_name=v.employee_name
+						d.designation=v.designation
+					})
+					cur_frm.refresh_field("participant_list")
+				}	
+			}
+		})
 	}
 
 })
