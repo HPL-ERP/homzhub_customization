@@ -26,6 +26,7 @@
   "rent_amount",
   "rent_auto_deduct",
   "accounting_section",
+  "include_in_bulk_transaction",
   "receive_rent",
   "received_reference_no",
   "recieved_amount",
@@ -243,9 +244,15 @@
    "fieldname": "review",
    "fieldtype": "Small Text",
    "label": "Review"
+  },
+  {
+   "default": "0",
+   "fieldname": "include_in_bulk_transaction",
+   "fieldtype": "Check",
+   "label": "Include in Bulk Transaction"
   }
  ],
- "modified": "2020-08-14 17:32:49.960607",
+ "modified": "2020-08-31 14:05:56.715741",
  "modified_by": "Administrator",
  "module": "homzhub_customization",
  "name": "Rent Transaction",
