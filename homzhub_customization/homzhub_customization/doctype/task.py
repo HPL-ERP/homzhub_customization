@@ -17,15 +17,16 @@ def validate(doc,method):
 def after_insert(doc,method):
 	from frappe.desk.form import assign_to
 	pro_doc=frappe.get_doc("Project",doc.get('project'))
-	pt_doc=frappe.get_doc('Project Template',pro_doc.project_template)
-	if pro_doc.project_template:
-		for p in pro_doc.participant_list:
-			user_roles=frappe.get_roles(p.user)
-			for d in pt_doc.tasks:
-				if d.role in user_roles:
-					assign_to.add({
-						"assign_to": p.user,
-						"doctype": "Task",
-						"name":doc.get('name'),
-						"description": doc.get('subject')
-					})
+	if pro_doc.get('project_template'):
+		pt_doc=frappe.get_doc('Project Template',pro_doc.project_template)
+		if pro_doc.project_template:
+			for p in pro_doc.participant_list:
+				user_roles=frappe.get_roles(p.user)
+				for d in pt_doc.tasks:
+					if d.role in user_roles:
+						assign_to.add({
+							"assign_to": p.user,
+							"doctype": "Task",
+							"name":doc.get('name'),
+							"description": doc.get('subject')
+						})
