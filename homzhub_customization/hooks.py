@@ -42,7 +42,8 @@ doctype_js = {
 				"Sales Order":"public/js/sales_order.js",
 				"Sales Invoice":"public/js/sales_invoice.js",
 				"Subscription":"public/js/subscription.js",
-}
+				"Journal Entry":"public/js/journal_entry.js",
+}	
 
 # Home Pages
 # ----------
@@ -120,6 +121,9 @@ doc_events = {
 	},
 	"Attendance Request": {
 		"validate":"homzhub_customization.homzhub_customization.doctype.employee.validate_attendance_request"
+	},
+	"Sales Invoice":{
+		"validate":["homzhub_customization.homzhub_customization.doctype.sales_invoice.validate"]
 	}
 
 }

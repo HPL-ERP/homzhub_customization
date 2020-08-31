@@ -26,7 +26,7 @@ class RentTransaction(Document):
 			"credit_in_account_currency": flt(self.recieved_amount)
 		})
 		doc.append("accounts", {
-			"account": "HDFC - HAPL",
+			"account": frappe.db.get_value('Subscription',self.subscription,'account') or "HDFC - HAPL",
 			"debit_in_account_currency": flt(self.recieved_amount)
 		
 		})
@@ -61,7 +61,7 @@ class RentTransaction(Document):
 			
 		})
 		doc.append("accounts", {
-			"account": "HDFC - HAPL",
+			"account":frappe.db.get_value('Subscription',self.subscription,'account') or "HDFC - HAPL",
 			"credit_in_account_currency": flt(self.transfer_amount)
 		
 		})

@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from frappe.utils.data import nowdate, getdate
-import frappe
-from frappe.utils import date_diff, add_months, today,add_days
+import frappe,json
+from frappe.utils import date_diff, add_months, today,add_days,today
 
 def validate_employee(doc,method):
     for emp in frappe.get_all('Employee',fields=['name','first_name','middle_name','last_name','gender','date_of_birth','date_of_joining']):
@@ -26,7 +26,9 @@ def validate_attendance_request(doc,method):
         
         # if not (today8am < now  and  now < today3pm) and  "HR Manager" not in roles: 
         #     frappe.throw("Please raise your attendace request between 8:45 AM to 3 PM")
-                
+        user = frappe.session.user
+        if getdate(today())!=getdate(doc.get('from_date')) and getdate(today())!=getdate(doc.get('to_date')) and ("HR Manager" not in frappe.get_roles(user)):
+            frappe.throw("You can not record back dated attendance request")  
         date_list1=[]
         next_date1=getdate(doc.get('from_date'))
         date_list1.append(next_date1)
@@ -56,5 +58,11 @@ def validate_attendance_request(doc,method):
         
 #         if not (today8am < now  and  now < today3pm) and  "HR Manager" not in roles: 
 #             frappe.throw("Please raise your attendace request between 8:45 AM to 7 PM")
-        
+@frappe.whitelist()
+def execute(emp,from_date,to_date):
+    data=[]
+    for d in frappe.get_all('Expense Claim',filters={'employee':emp,'posting_date':['between',(from_date,to_date)]},fields=['name','posting_date','employee_name','total_claimed_amount']):
+        data.append(d)
+    print(data)
+    return data   
             
