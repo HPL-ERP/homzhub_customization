@@ -147,3 +147,21 @@ def update_status(doc,method):
 	if len(doc.get('invoices'))<1 and doc.status in ['Past Due Date','Unpaid']:
 		doc.status='Active'
 
+def validate(doc,method):
+    if doc.get('subscription'):
+        subsc=frappe.get_doc('Subscription',doc.get('subscription'))
+        sub_dates=[]
+        next_date=getdate(subsc.current_invoice_start)
+        sub_dates.append(next_date.isoformat())
+        while getdate(subsc.current_invoice_end)!= next_date:
+            next_date=add_days(next_date, 1)
+            sub_dates.append(next_date.isoformat())
+        for d in frappe.get_all("Sales Invoice",filters={'subscription':doc.get('subscription')},fields=['name','from_date','to_date']):
+            next_date=getdate(d.get('from_date'))
+            if next_date.isoformat() in sub_dates and doc.name!=d.name:
+                frappe.throw("Invoice <b><a href='#Form/Sales Invoice/{0}'>{0}</a></b> Alredy Exist Between Dates".format(d.name))
+            while getdate(d.get('to_date'))!= next_date:
+                next_date=add_days(next_date, 1)
+                if next_date.isoformat() in sub_dates and doc.name!=d.name:
+                    frappe.throw("Invoice <b><a href='#Form/Sales Invoice/{0}'>{0}</a></b> Alredy Exist Between Dates".format(d.name))
+
