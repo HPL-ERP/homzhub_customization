@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from frappe.utils.data import nowdate, getdate
 from frappe.utils import date_diff, add_months, today,add_days
-import frappe
+import frappe,json
 
 def validate_dates(doc,method):
     if doc.expected_start_date and  doc.expected_end_date:
@@ -30,3 +30,18 @@ def fetch_participant_table(designation):
         if frappe.db.exists('User',d.user_id):
             users.append(d)
     return users
+
+@frappe.whitelist()
+def set_inventory_details(inventory_details,address):
+    add_doc=frappe.get_doc('Address',address)
+    table=[]
+    if add_doc:
+        add_doc.inventory_details=[]
+        for d in json.loads(inventory_details):
+            add_doc.append('inventory_details', {
+                'asset': d.get('asset'),
+                'quantity': d.get('quantity'),
+                'description': d.get('description')
+            })
+            
+        add_doc.save()  

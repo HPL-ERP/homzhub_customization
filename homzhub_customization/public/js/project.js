@@ -122,6 +122,19 @@ frappe.ui.form.on('Project', {
 				}	
 			}
 		})
+	},
+	sync_with_address:function(frm){
+		frappe.call({
+			method:
+			"homzhub_customization.homzhub_customization.doctype.project.set_inventory_details",
+			args: {
+				inventory_details: frm.doc.inventory_list,
+				address:frm.doc.property_address
+			},
+			callback: function (data) {
+				console.log('')
+			}
+		})
 	}
 
 })
