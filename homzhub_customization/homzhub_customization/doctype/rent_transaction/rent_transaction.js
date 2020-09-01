@@ -82,5 +82,39 @@ frappe.ui.form.on('Rent Transaction', {
 			frm.set_value('rent_transffered',0)
 			frappe.throw(__("Please Enter Transfer Date") )
 		}
+	},
+	include_in_bulk_transaction(frm){
+		if(frm.doc.include_in_bulk_transaction==1){
+			if(frm.doc.__islocal) {
+				frappe.throw(__("Please Save Document first") )
+			}
+		var dialog = new frappe.ui.Dialog({
+			'fields': [
+				{fieldname: 'journal_entry',label:'Journal Entry', fieldtype: 'Link', options:'Journal Entry',
+					change: function () {
+						frappe.db.get_value("Journal Entry", {"name":dialog.get_value('journal_entry')},["cheque_date","total_credit"], function(r){
+							dialog.set_value('total_credit',r.total_credit)
+							dialog.set_value('reference_date',r.cheque_date)
+							})
+					}
+				},
+				{fieldname: 'total_credit',label:'Total Credit', fieldtype: 'Data',read_only:1},
+				{fieldname: 'reference_date',label:'Reference Date', fieldtype: 'Data',read_only:1}
+			],
+			primary_action: function(){
+				dialog.hide();
+				frm.set_value("payment_entries",[])
+				var d = cur_frm.add_child("payment_entries")
+				d.account_entries=dialog.get_value('journal_entry')
+				cur_frm.refresh_field("payment_entries")
+				show_alert({
+					message: __('Successfully Done'),
+					indicator: 'green'
+				});
+			},
+			primary_action_label: __('Insert')
+		})
+		dialog.show();
 	}
+}
 	})
