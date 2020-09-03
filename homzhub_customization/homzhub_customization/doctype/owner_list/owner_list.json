@@ -1,0 +1,37 @@
+{
+ "creation": "2020-09-03 23:37:53.821094",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "prop_owner",
+  "owner_name"
+ ],
+ "fields": [
+  {
+   "fieldname": "owner_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Owner Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "prop_owner",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Owner",
+   "options": "Customer"
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-09-03 23:42:16.149174",
+ "modified_by": "Administrator",
+ "module": "homzhub_customization",
+ "name": "Owner List",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

@@ -1,0 +1,37 @@
+{
+ "creation": "2020-09-03 23:36:20.421228",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "poa",
+  "poa_name"
+ ],
+ "fields": [
+  {
+   "fieldname": "poa",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "POA ",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "poa_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "POA Name",
+   "read_only": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-09-03 23:36:35.927356",
+ "modified_by": "Administrator",
+ "module": "homzhub_customization",
+ "name": "POA List",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
