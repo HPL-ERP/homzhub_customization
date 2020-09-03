@@ -139,24 +139,24 @@ scheduler_events = {
 # Scheduled Tasks
 # ---------------
 
-scheduler_events = {
-# 	"all": [
-# 		"homzhub_customization.tasks.all"
-# 	],
- 	# "daily": [
- 	# 	"homzhub_customization.homzhub_customization.doctype.custom_notification.weekly_auto_email",
-	# 	"homzhub_customization.homzhub_customization.doctype.custom_notification.execute"
- 	# ]
-# 	"hourly": [
-# 		"homzhub_customization.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"homzhub_customization.tasks.weekly"
-# 	]
-# 	"monthly": [
-# 		"homzhub_customization.tasks.monthly"
-# 	]
- }
+# scheduler_events = {
+# # 	"all": [
+# # 		"homzhub_customization.tasks.all"
+# # 	],
+#  	# "daily": [
+#  	# 	"homzhub_customization.homzhub_customization.doctype.custom_notification.weekly_auto_email",
+# 	# 	"homzhub_customization.homzhub_customization.doctype.custom_notification.execute"
+#  	# ]
+# # 	"hourly": [
+# # 		"homzhub_customization.tasks.hourly"
+# # 	],
+# # 	"weekly": [
+# # 		"homzhub_customization.tasks.weekly"
+# # 	]
+# # 	"monthly": [
+# # 		"homzhub_customization.tasks.monthly"
+# # 	]
+#  }
 
 # Testing
 # -------
