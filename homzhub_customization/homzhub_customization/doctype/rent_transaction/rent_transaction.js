@@ -85,6 +85,8 @@ frappe.ui.form.on('Rent Transaction', {
 	},
 	include_in_bulk_transaction(frm){
 		if(frm.doc.include_in_bulk_transaction==1){
+			// frm.remove_custom_button("Receive Rent")
+			frm.set_df_property("receive_rent","hidden",1)
 			if(frm.doc.__islocal) {
 				frappe.throw(__("Please Save Document first") )
 			}
@@ -92,9 +94,12 @@ frappe.ui.form.on('Rent Transaction', {
 			'fields': [
 				{fieldname: 'journal_entry',label:'Journal Entry', fieldtype: 'Link', options:'Journal Entry',
 					change: function () {
-						frappe.db.get_value("Journal Entry", {"name":dialog.get_value('journal_entry')},["cheque_date","total_credit"], function(r){
+						frappe.db.get_value("Journal Entry", {"name":dialog.get_value('journal_entry')},["cheque_date","total_credit","cheque_no"], function(r){
 							dialog.set_value('total_credit',r.total_credit)
 							dialog.set_value('reference_date',r.cheque_date)
+							frm.set_value('receive_date',r.cheque_date)
+							frm.set_value('received_reference_no',r.cheque_no)
+							frm.set_value('rent_recieved',1)
 							})
 					}
 				},
