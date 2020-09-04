@@ -18,6 +18,7 @@
   "subscription_plan",
   "subscription_start_date",
   "subscription_end_date",
+  "owner_list",
   "rent_details_section",
   "agreement_start",
   "agreement_end",
@@ -250,9 +251,15 @@
    "fieldname": "include_in_bulk_transaction",
    "fieldtype": "Check",
    "label": "Include in Bulk Transaction"
+  },
+  {
+   "fieldname": "owner_list",
+   "fieldtype": "Table",
+   "label": "Owner List",
+   "options": "Owner List"
   }
  ],
- "modified": "2020-08-31 14:05:56.715741",
+ "modified": "2020-09-04 23:05:25.830275",
  "modified_by": "Administrator",
  "module": "homzhub_customization",
  "name": "Rent Transaction",
