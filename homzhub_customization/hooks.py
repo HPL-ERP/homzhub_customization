@@ -43,6 +43,7 @@ doctype_js = {
 				"Sales Invoice":"public/js/sales_invoice.js",
 				"Subscription":"public/js/subscription.js",
 				"Journal Entry":"public/js/journal_entry.js",
+				"Quotation":"public/js/quotation.js",
 }	
 
 # Home Pages
@@ -124,6 +125,9 @@ doc_events = {
 	},
 	"Sales Invoice":{
 		"validate":["homzhub_customization.homzhub_customization.doctype.sales_invoice.validate"]
+	},
+	"Journal Entry":{
+		"validate":"homzhub_customization.homzhub_customization.doctype.quotation.validate"
 	}
 
 }

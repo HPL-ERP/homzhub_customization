@@ -4,7 +4,8 @@ cur_frm.dashboard.add_transactions([
 			'Subscription',
 			'Rent Transaction',
 			'Journal Entry',
-			'Lead'
+			'Lead',
+			'Quotation'
 		],
 		'label': 'Others'
 	},
@@ -101,7 +102,7 @@ frappe.ui.form.on('Project', {
 		}
 	},
 	default_designation:function(frm){
-		
+		if(frm.doc.default_designation){
 		frappe.call({
 			method:
 			"homzhub_customization.homzhub_customization.doctype.project.fetch_participant_table",
@@ -122,6 +123,7 @@ frappe.ui.form.on('Project', {
 				}	
 			}
 		})
+	}
 	},
 	sync_with_address:function(frm){
 		frappe.call({
