@@ -27,12 +27,40 @@ def execute():
                 data1.append({'project':project,'task_id':task,'task_name':subject,'start_date':start_date,'end_date':end_date,'status':status,'time':time})
             if task and status=='Overdue':
                 data2.append({'project':project,'task_id':task,'task_name':subject,'start_date':start_date,'end_date':end_date,'status':status})
+        
+        for todo in frappe.get_all('To Do',filters={'user':us.name,'reference_type':'Task'}):
+            doc=frappe.get_doc('To Do',todo.name)
+            task,project,status,subject,time,start_date,end_date=frappe.db.get_value('Task',{'name':doc.reference_name},['name','project','status','subject','expected_time','exp_start_date','exp_end_date'])
+            if start_date and end_date:
+                start_date=start_date.strftime("%d-%m-%Y")
+                end_date=end_date.strftime("%d-%m-%Y")
+            else:
+                start_date='-'
+                end_date='-'
+            if not project:
+                project='-'
+            if task and status=='Open':
+                data1.append({'project':project,'task_id':task,'task_name':subject,'start_date':start_date,'end_date':end_date,'status':status,'time':time})
+            if task and status=='Overdue':
+                data2.append({'project':project,'task_id':task,'task_name':subject,'start_date':start_date,'end_date':end_date,'status':status})
         open_task_send_msg(data1,us)
         overdue_task_send_msg(data2,us)
 
         for ds in frappe.get_all('DocShare',filters={'user':us.name,'share_doctype':'Issue'}):
             doc=frappe.get_doc('DocShare',ds.name)
             issue,customer,status,subject,date=frappe.db.get_value('Issue',{'name':doc.share_name},['name','customer','status','subject','opening_date'])
+            if date:
+                date=date.strftime("%d-%m-%Y")
+            else:
+                date='-'
+            if not customer:
+                customer='-'
+            if issue and status=='Open':
+                data3.append({'customer':customer,'issue_id':issue,'issue_name':subject,'status':status,'date':date})
+        
+        for todo in frappe.get_all('To Do',filters={'owner':us.name,'reference_type':'Issue'}):
+            doc=frappe.get_doc('To Do',todo.name)
+            issue,customer,status,subject,date=frappe.db.get_value('Issue',{'name':doc.reference_name},['name','customer','status','subject','opening_date'])
             if date:
                 date=date.strftime("%d-%m-%Y")
             else:
