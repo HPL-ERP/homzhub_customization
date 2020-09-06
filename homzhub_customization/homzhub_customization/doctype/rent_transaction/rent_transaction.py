@@ -23,14 +23,16 @@ class RentTransaction(Document):
 		doc.voucher_type="Bank Entry"
 		doc.append("accounts", {
 			"account": "NACH - HAPL",
-			"credit_in_account_currency": flt(self.recieved_amount)
+			"credit_in_account_currency": flt(self.recieved_amount),
+			"project": self.project
 		})
 		doc.append("accounts", {
 			"account": frappe.db.get_value('Subscription',self.subscription,'account') or "HDFC - HAPL",
 			"debit_in_account_currency": flt(self.recieved_amount),
-			"project":self.project
+			"project": self.project
 		
 		})
+		
 		doc.cheque_no=self.received_reference_no
 		doc.cheque_date=self.receive_date
 		user_remark="Rent Received from "
@@ -64,7 +66,8 @@ class RentTransaction(Document):
 		})
 		doc.append("accounts", {
 			"account":frappe.db.get_value('Subscription',self.subscription,'account') or "HDFC - HAPL",
-			"credit_in_account_currency": flt(self.transfer_amount)
+			"credit_in_account_currency": flt(self.transfer_amount),
+			"project":self.project
 		
 		})
 		doc.cheque_no=self.transfer_reference_no

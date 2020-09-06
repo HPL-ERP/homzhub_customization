@@ -45,6 +45,9 @@ doctype_js = {
 				"Journal Entry":"public/js/journal_entry.js",
 				"Quotation":"public/js/quotation.js",
 }	
+doctype_list_js = {
+	"Quotation":"public/js/quotation_list.js",
+}
 
 # Home Pages
 # ----------
@@ -127,7 +130,8 @@ doc_events = {
 		"validate":["homzhub_customization.homzhub_customization.doctype.sales_invoice.validate"]
 	},
 	"Journal Entry":{
-		"validate":"homzhub_customization.homzhub_customization.doctype.quotation.validate"
+		"validate":["homzhub_customization.homzhub_customization.doctype.quotation.validate",
+		"homzhub_customization.homzhub_customization.doctype.quotation.update_quotation_status"]
 	}
 
 }
