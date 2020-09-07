@@ -108,6 +108,7 @@ frappe.ui.form.on('Project', {
 			"homzhub_customization.homzhub_customization.doctype.project.fetch_participant_table",
 			args: {
 				designation: frm.doc.default_designation,
+				table:frm.doc.participant_list
 			},
 			callback: function (data) {
 				frm.clear_table("participant_list")

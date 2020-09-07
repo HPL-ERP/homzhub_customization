@@ -21,9 +21,8 @@ def after_insert(doc,method):
 		pt_doc=frappe.get_doc('Project Template',pro_doc.project_template)
 		if pro_doc.project_template:
 			for p in pro_doc.participant_list:
-				user_roles=frappe.get_roles(p.user)
 				for d in pt_doc.tasks:
-					if d.role in user_roles:
+					if d.designation == p.designation:
 						assign_to.add({
 							"assign_to": p.user,
 							"doctype": "Task",

@@ -24,8 +24,10 @@ def fetch_inventory_table(address):
     return items
 
 @frappe.whitelist()
-def fetch_participant_table(designation):
+def fetch_participant_table(designation,table):
     users=[]
+    for d in json.loads(table):
+        users.append({'user_id':d.get('user'),'name':d.get('employee'),'employee_name':d.get('employee_name'),'designation':d.get('designation')})
     for d in frappe.get_all('Employee',filters={'designation':designation},fields=['name','employee_name','user_id','designation']):
         if frappe.db.exists('User',d.user_id):
             users.append(d)
