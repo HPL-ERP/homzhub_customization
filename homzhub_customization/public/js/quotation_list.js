@@ -1,6 +1,6 @@
 frappe.listview_settings['Quotation'] = {
 	add_fields: ["customer_name", "base_grand_total", "status",
-		"company", "currency", 'valid_till','journal_entry'],
+		"company", "currency", 'valid_till','journal_entry','amount','total'],
 
 	onload: function(listview) {
 		listview.page.fields_dict.quotation_to.get_query = function() {
@@ -14,7 +14,12 @@ frappe.listview_settings['Quotation'] = {
 
 	get_indicator: function(doc) {
 		if(doc.journal_entry===1 && doc.status==="Open") {
-			return [__("Paid"), "green"];
+			if (doc.total>doc.amount && doc.amount!=0){
+				return [__("Partially Paid"), "orange"];
+			}
+			else{
+				return [__("Paid"), "green"];
+			}
 		}
 		else if(doc.status==="Open") {
 			return [__("Open"), "orange", "status,=,Open"];

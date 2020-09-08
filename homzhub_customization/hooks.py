@@ -130,8 +130,8 @@ doc_events = {
 		"validate":["homzhub_customization.homzhub_customization.doctype.sales_invoice.validate"]
 	},
 	"Journal Entry":{
-		"validate":["homzhub_customization.homzhub_customization.doctype.quotation.validate",
-		"homzhub_customization.homzhub_customization.doctype.quotation.update_quotation_status"]
+		"validate":["homzhub_customization.homzhub_customization.doctype.quotation.validate"],
+		"on_submit":"homzhub_customization.homzhub_customization.doctype.quotation.update_amount_for_status"
 	}
 
 }

@@ -11,5 +11,8 @@ frappe.ui.form.on('Quotation', {
 		__('Create')
 		)	
 
+	},
+	validate: function(frm){
+		frm.set_value('amount',frm.doc.total)
 	}
 })
