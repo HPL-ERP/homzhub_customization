@@ -1,0 +1,53 @@
+{
+ "creation": "2020-09-09 23:15:38.056666",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "contact",
+  "first_name",
+  "middle_name",
+  "last_name"
+ ],
+ "fields": [
+  {
+   "fieldname": "contact",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Contact",
+   "options": "Contact"
+  },
+  {
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "First Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "middle_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Middle Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "last_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Last Name",
+   "read_only": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-09-09 23:25:32.733941",
+ "modified_by": "Administrator",
+ "module": "homzhub_customization",
+ "name": "Project Contact list",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
