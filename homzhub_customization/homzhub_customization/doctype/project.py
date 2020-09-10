@@ -47,3 +47,16 @@ def set_inventory_details(inventory_details,address):
             })
             
         add_doc.save()  
+
+@frappe.whitelist()
+def get_contact_list(tenant):
+    contact_list=[]
+    for d in frappe.get_all('Dynamic Link',filters={'link_name':tenant,'parenttype':'Contact'},fields=['parent']):
+        doc=frappe.get_doc('Contact',d.parent)
+        contact_list.append({
+            'contact':doc.name,
+            'first_name':doc.first_name,
+            'middle_name':doc.middle_name,
+            'last_name':doc.last_name
+        })
+    return contact_list

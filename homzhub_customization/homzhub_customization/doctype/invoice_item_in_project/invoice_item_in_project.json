@@ -4,6 +4,7 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "invoice",
   "item",
   "qty"
  ],
@@ -20,10 +21,16 @@
    "fieldtype": "Int",
    "in_list_view": 1,
    "label": "Qty"
+  },
+  {
+   "fieldname": "invoice",
+   "fieldtype": "Link",
+   "label": "Invoice",
+   "options": "Sales Invoice"
   }
  ],
  "istable": 1,
- "modified": "2020-09-09 16:56:31.927537",
+ "modified": "2020-09-10 17:59:24.916905",
  "modified_by": "Administrator",
  "module": "homzhub_customization",
  "name": "Invoice Item In Project",

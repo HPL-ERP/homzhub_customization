@@ -147,6 +147,25 @@ frappe.ui.form.on("Tenant List", "tenant", function(frm, cdt, cdn) {
 		d.tenant_name = r.customer_name
 		refresh_field("tenant_name", d.name, d.parentfield);
 	})
+	frappe.call({
+		method:
+		"homzhub_customization.homzhub_customization.doctype.project.get_contact_list",
+		args: {
+			tenant: d.tenant
+		},
+		callback: function (data) {
+			if (data.message){
+				$.each(data.message, function (i, v) {
+					var contact = cur_frm.add_child("contacts_list")
+					contact.contact=v.contact
+					contact.first_name=v.first_name
+					contact.middle_name=v.middle_name
+					contact.last_name=v.last_name
+				})
+				cur_frm.refresh_field("contacts_list")
+			}
+		}
+	})
 
 });
 frappe.ui.form.on("Buyer List", "buyer", function(frm, cdt, cdn) {

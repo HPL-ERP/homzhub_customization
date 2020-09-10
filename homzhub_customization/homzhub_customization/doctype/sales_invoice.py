@@ -165,3 +165,29 @@ def validate(doc,method):
                 if next_date.isoformat() in sub_dates and doc.name!=d.name:
                     frappe.throw("Invoice <b><a href='#Form/Sales Invoice/{0}'>{0}</a></b> Alredy Exist Between Dates".format(d.name))
 
+def on_submit(doc,method):
+	if doc.get('project') and not doc.get('subscription'):
+		pro_doc=frappe.get_doc('Project',doc.get('project'))
+		for d in doc.get('items'):
+			pro_doc.append("invoiced_items", {
+			"invoice" : doc.get('name'),
+			"item" : d.get('item_code'),
+			'qty':d.get('qty')
+			})
+		pro_doc.save()
+
+def remove_from_project(doc,method):
+	if doc.get('project') and not doc.get('subscription'):
+		pro_doc=frappe.get_doc('Project',doc.get('project'))
+		new_list=pro_doc.get('invoiced_items')
+		pro_doc.set('invoiced_items',[])
+		for d in new_list:
+			if doc.get('name') !=d.get('invoice'):
+				pro_doc.append("invoiced_items", {
+				"invoice" : doc.get('name'),
+				"item" : d.get('item_code'),
+				'qty':d.get('qty')
+				})
+		pro_doc.save()
+
+

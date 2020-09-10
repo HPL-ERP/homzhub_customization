@@ -127,7 +127,9 @@ doc_events = {
 		"validate":"homzhub_customization.homzhub_customization.doctype.employee.validate_attendance_request"
 	},
 	"Sales Invoice":{
-		"validate":["homzhub_customization.homzhub_customization.doctype.sales_invoice.validate"]
+		"validate":["homzhub_customization.homzhub_customization.doctype.sales_invoice.validate"],
+		"on_submit":"homzhub_customization.homzhub_customization.doctype.sales_invoice.on_submit",
+		"on_trash":"homzhub_customization.homzhub_customization.doctype.sales_invoice.remove_from_project"
 	},
 	"Journal Entry":{
 		"validate":["homzhub_customization.homzhub_customization.doctype.quotation.validate"],

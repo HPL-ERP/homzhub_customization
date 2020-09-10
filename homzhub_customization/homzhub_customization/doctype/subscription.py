@@ -254,6 +254,19 @@ def validate(doc,method):
 			customer_list.append(d.tenant)
 		if doc.get('customer') not in customer_list:
 			frappe.throw("<b>customer</b> in subscription should be equal to <b>owner</b>/<b>tenant list</b>/<b>customer</b>")
+	if doc.get('project'):
+		pro_doc=frappe.get_doc('Project',doc.get('project'))
+		subscriptions=[]
+		for d in pro_doc.get('subscription_plans'):
+			subscriptions.append(d.get('subscription'))
+		if doc.name not in subscriptions:
+			for d in doc.get('plans'):
+				pro_doc.append("subscription_plans", {
+				"subscription" : doc.name,
+				"subscription_plan" : d.plan
+				})
+				pro_doc.save()
+	
 
 @frappe.whitelist()
 def update_status(doc):
