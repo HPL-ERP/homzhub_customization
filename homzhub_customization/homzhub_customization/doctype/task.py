@@ -20,14 +20,14 @@ def after_insert(doc,method):
 	if pro_doc.get('project_template'):
 		designation=[]
 		pt_doc=frappe.get_doc('Project Template',pro_doc.project_template)
-		for d in pt_doc.tasks:
-			designation.append(d.designation)
 		if pro_doc.project_template:
-			for p in pro_doc.participant_list:
-				if p.designation in designation:
-					assign_to.add({
-						"assign_to": p.user,
-						"doctype": "Task",
-						"name":doc.get('name'),
-						"description": doc.get('subject')
-					})
+			for d in pt_doc.tasks:
+				if d.subject==doc.get('subject'):
+					for p in pro_doc.participant_list:
+						if p.designation == d.designation:
+							assign_to.add({
+								"assign_to": p.user,
+								"doctype": "Task",
+								"name":doc.get('name'),
+								"description": doc.get('subject')
+							})

@@ -116,8 +116,7 @@ doc_events = {
 		"homzhub_customization.homzhub_customization.doctype.subscription.validate"]
 	},
 	"Task": {
-		"after_insert":["homzhub_customization.homzhub_customization.doctype.auto_share.on_save",
-						"homzhub_customization.homzhub_customization.doctype.task.after_insert"],
+		"after_insert":["homzhub_customization.homzhub_customization.doctype.task.after_insert"],
 		"validate":"homzhub_customization.homzhub_customization.doctype.task.validate"
 	},
 	"Issue": {
