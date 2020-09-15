@@ -259,13 +259,14 @@ def validate(doc,method):
 		subscriptions=[]
 		for d in pro_doc.get('subscription_plans'):
 			subscriptions.append(d.get('subscription'))
-		if doc.name not in subscriptions:
-			for d in doc.get('plans'):
-				pro_doc.append("subscription_plans", {
-				"subscription" : doc.name,
-				"subscription_plan" : d.plan
-				})
-				pro_doc.save()
+		if frappe.db.exists("Subscription", doc.name):
+			if doc.name not in subscriptions:
+				for d in doc.get('plans'):
+					pro_doc.append("subscription_plans", {
+					"subscription" : doc.name,
+					"subscription_plan" : d.plan
+					})
+					pro_doc.save()
 	
 
 @frappe.whitelist()
