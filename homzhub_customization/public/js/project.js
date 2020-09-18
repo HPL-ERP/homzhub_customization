@@ -126,6 +126,31 @@ frappe.ui.form.on('Project', {
 		})
 	}
 	},
+	default_department:function(frm){
+		if(frm.doc.default_department){
+		frappe.call({
+			method:
+			"homzhub_customization.homzhub_customization.doctype.project.fetch_department_participant_table",
+			args: {
+				department: frm.doc.default_department,
+				table:frm.doc.participant_list || []
+			},
+			callback: function (data) {
+				frm.clear_table("participant_list")
+				if (data.message){
+					$.each(data.message, function (i, v) {
+						var d = cur_frm.add_child("participant_list")
+						d.user=v.user_id
+						d.employee=v.name
+						d.employee_name=v.employee_name
+						d.designation=v.designation
+					})
+					cur_frm.refresh_field("participant_list")
+				}	
+			}
+		})
+	}
+	},
 	sync_with_address:function(frm){
 		frappe.call({
 			method:
