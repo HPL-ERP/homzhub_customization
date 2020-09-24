@@ -158,7 +158,7 @@ def validate(doc,method):
             sub_dates.append(next_date.isoformat())
         for d in frappe.get_all("Sales Invoice",filters={'subscription':doc.get('subscription')},fields=['name','from_date','to_date']):
             next_date=getdate(d.get('from_date'))
-            if next_date.isoformat() in sub_dates and doc.name!=d.name:
+            if next_date.isoformat() in sub_dates and doc.name!=d.name and doc.amended_from:
                 frappe.throw("Invoice <b><a href='#Form/Sales Invoice/{0}'>{0}</a></b> Alredy Exist Between Dates".format(d.name))
             while getdate(d.get('to_date'))!= next_date:
                 next_date=add_days(next_date, 1)

@@ -26,12 +26,27 @@ def fetch_inventory_table(address):
 @frappe.whitelist()
 def fetch_participant_table(designation,table):
     users=[]
+    duplicate=[]
     for d in json.loads(table):
+        duplicate.append(d.get('user'))
         users.append({'user_id':d.get('user'),'name':d.get('employee'),'employee_name':d.get('employee_name'),'designation':d.get('designation')})
     for d in frappe.get_all('Employee',filters={'designation':designation},fields=['name','employee_name','user_id','designation']):
-        if frappe.db.exists('User',d.user_id):
+        if frappe.db.exists('User',d.user_id) and d.user_id not in duplicate:
             users.append(d)
     return users
+
+@frappe.whitelist()
+def fetch_department_participant_table(department,table):
+    users=[]
+    duplicate=[]
+    for d in json.loads(table):
+        duplicate.append(d.get('user'))
+        users.append({'user_id':d.get('user'),'name':d.get('employee'),'employee_name':d.get('employee_name'),'designation':d.get('designation')})
+    for d in frappe.get_all('Employee',filters={'department':department},fields=['name','employee_name','user_id','designation']):
+        if frappe.db.exists('User',d.user_id) and d.user_id not in duplicate:
+            users.append(d)
+    return users
+    
 
 @frappe.whitelist()
 def set_inventory_details(inventory_details,address):
