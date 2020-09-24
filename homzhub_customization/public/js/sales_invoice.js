@@ -17,6 +17,12 @@ validate:function(frm){
 		itm.rate=(parseInt(itm.service_charges_in_per)/100*parseInt(frm.doc.property_rate))
 	})
 	}
+	if (frm.doc.calculate_rate_from_property==1){
+		cur_frm.doc.items.forEach(function(itm){
+			console.log(parseInt(itm.service_charges_in_per)/100*parseInt(frm.doc.property_rent))
+		itm.rate=(parseInt(itm.service_charges_in_per)/100*parseInt(frm.doc.property_rent)*11)
+	})
+	}
 },
 is_selling_property_:function(frm){
 		if (frm.doc.is_selling_property_==1){
