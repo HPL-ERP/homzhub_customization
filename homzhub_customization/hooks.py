@@ -133,6 +133,9 @@ doc_events = {
 	"Journal Entry":{
 		"validate":["homzhub_customization.homzhub_customization.doctype.quotation.validate"],
 		"on_submit":"homzhub_customization.homzhub_customization.doctype.quotation.update_amount_for_status"
+	},
+	"Employee Onboarding":{
+		"on_change":"homzhub_customization.homzhub_customization.doctype.project.delete_project_made_from_emp_onboarding"
 	}
 
 }
