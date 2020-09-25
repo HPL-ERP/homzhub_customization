@@ -136,6 +136,10 @@ doc_events = {
 	},
 	"Employee Onboarding":{
 		"on_change":"homzhub_customization.homzhub_customization.doctype.project.delete_project_made_from_emp_onboarding"
+	},
+	"ToDo":{
+		"validate":"homzhub_customization.homzhub_customization.doctype.todo.validate",
+		"on_change":"homzhub_customization.homzhub_customization.doctype.todo.on_delete"
 	}
 
 }
