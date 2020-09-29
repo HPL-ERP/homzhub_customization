@@ -28,7 +28,7 @@ def execute():
             if task and status=='Overdue':
                 data2.append({'project':project,'task_id':task,'task_name':subject,'start_date':start_date,'end_date':end_date,'status':status})
         
-        for todo in frappe.get_all('ToDo',filters={'user':us.name,'reference_type':'Task'}):
+        for todo in frappe.get_all('ToDo',filters={'owner':us.name,'reference_type':'Task'}):
             doc=frappe.get_doc('ToDo',todo.name)
             task,project,status,subject,time,start_date,end_date=frappe.db.get_value('Task',{'name':doc.reference_name},['name','project','status','subject','expected_time','exp_start_date','exp_end_date'])
             if start_date and end_date:
