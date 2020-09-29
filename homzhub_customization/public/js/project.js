@@ -28,6 +28,13 @@ frappe.ui.form.on('Project', {
 				}
 			}
 		});
+		frm.set_query("employee", "participant_list", function() {
+			return {
+				filters: {
+					status:'Active'
+				}
+			}
+		});
     },
     property_owner: function(frm){
 		frm.set_value('property_address','');
