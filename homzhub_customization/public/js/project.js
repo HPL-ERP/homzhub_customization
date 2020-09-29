@@ -163,8 +163,7 @@ frappe.ui.form.on('Project', {
 			method:
 			"homzhub_customization.homzhub_customization.doctype.project.set_inventory_details",
 			args: {
-				inventory_details: frm.doc.inventory_list,
-				address:frm.doc.property_address
+				doc: frm.doc
 			},
 			callback: function (data) {
 				console.log('')

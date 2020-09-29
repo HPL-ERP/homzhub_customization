@@ -49,18 +49,38 @@ def fetch_department_participant_table(department,table):
     
 
 @frappe.whitelist()
-def set_inventory_details(inventory_details,address):
-    add_doc=frappe.get_doc('Address',address)
-    table=[]
+def set_inventory_details(doc):
+    doc=json.loads(doc)
+    add_doc=frappe.get_doc('Address',doc.get('property_address'))
     if add_doc:
         add_doc.inventory_details=[]
-        for d in json.loads(inventory_details):
+        for d in doc.get('inventory_list'):
             add_doc.append('inventory_details', {
                 'asset': d.get('asset'),
                 'quantity': d.get('quantity'),
                 'description': d.get('description')
             })
-            
+        add_doc.electricity_status=[]
+        for d in doc.get('electricity_billing'):
+            add_doc.append('electricity_status', {
+                'consumer_no': d.get('consumer_no'),
+                'date': d.get('date'),
+                'month': d.get('month'),
+                'amount': d.get('amount'),
+                'reading': d.get('reading'),
+                'status': d.get('status')
+            })
+
+        add_doc.electricity_status=[]
+        for d in doc.get('water_meter_billing'):
+            add_doc.append('water_meter_bill', {
+                'consumer_no': d.get('consumer_no'),
+                'date': d.get('date'),
+                'month': d.get('month'),
+                'amount': d.get('amount'),
+                'reading': d.get('reading'),
+                'status': d.get('status')
+            })
         add_doc.save()  
 
 @frappe.whitelist()
