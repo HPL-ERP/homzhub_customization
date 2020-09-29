@@ -18,7 +18,7 @@ frappe.ui.form.on('Sales Order Item', {
 
 frappe.ui.form.on('Sales Order', {
 validate:function(frm){
-	if(frm.doc.project!=undefined && frm.doc.__islocal){
+	if(frm.doc.__islocal && frm.doc.based_on_rent==1){
 		frappe.call({
 			method:
 			"homzhub_customization.homzhub_customization.doctype.sales_order.item_table_calculation",
