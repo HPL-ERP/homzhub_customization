@@ -1,0 +1,65 @@
+{
+ "creation": "2020-09-28 16:42:17.314022",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "consumer_no",
+  "date",
+  "month",
+  "amount",
+  "reading",
+  "status"
+ ],
+ "fields": [
+  {
+   "fieldname": "consumer_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Consumer No"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date"
+  },
+  {
+   "fieldname": "month",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Month",
+   "options": "\nJAN\nFEB\nMAR\nAPR\nMAY\nJUN\nJUL\nAUG\nSEP\nOCT\nNOV\nDEC"
+  },
+  {
+   "fieldname": "reading",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Billing Unit"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "\nPAID\nUNPAID"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Amount"
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-09-28 16:54:39.247894",
+ "modified_by": "Administrator",
+ "module": "homzhub_customization",
+ "name": "Billing Data",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
