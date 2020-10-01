@@ -106,7 +106,7 @@ doctype_list_js = {
 # }
 doc_events = {
 	"Project": {
-		"validate":"homzhub_customization.homzhub_customization.doctype.project.validate_dates"
+		"validate":"homzhub_customization.homzhub_customization.doctype.project.validate"
 	},
 	"Employee": {
 		"validate":"homzhub_customization.homzhub_customization.doctype.employee.validate_employee"
