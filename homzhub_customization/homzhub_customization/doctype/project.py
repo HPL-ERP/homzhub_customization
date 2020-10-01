@@ -82,7 +82,7 @@ def set_inventory_details(doc):
                 'status': d.get('status')
             })
 
-        add_doc.electricity_status=[]
+        add_doc.water_meter_bill=[]
         for d in doc.get('water_meter_billing'):
             add_doc.append('water_meter_bill', {
                 'consumer_no': d.get('consumer_no'),
