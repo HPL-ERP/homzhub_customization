@@ -18,12 +18,13 @@ def validate(doc,method):
     	doc.lock_in_period_end=add_months(doc.get('lock_in_period_start'),doc.get('lock_in_period'))
 
     for d in doc.get('participant_list'):
-        todo=frappe.new_doc('ToDo')
-        todo.reference_type=doc.doctype
-        todo.reference_name=doc.name
-        todo.owner=d.get('user')
-        todo.description="Assignment for Project "+doc.name
-        todo.save()
+        if len(frappe.get_all('ToDo',filters={'owner':d.get('user'),'reference_type':doc.doctype,'reference_name':doc.name}))==0:
+            todo=frappe.new_doc('ToDo')
+            todo.reference_type=doc.doctype
+            todo.reference_name=doc.name
+            todo.owner=d.get('user')
+            todo.description="Assignment for Project "+doc.name
+            todo.save()
     
 
 @frappe.whitelist()
@@ -82,7 +83,7 @@ def set_inventory_details(doc):
                 'status': d.get('status')
             })
 
-        add_doc.water_meter_bill=[]
+        add_doc.electricity_status=[]
         for d in doc.get('water_meter_billing'):
             add_doc.append('water_meter_bill', {
                 'consumer_no': d.get('consumer_no'),
