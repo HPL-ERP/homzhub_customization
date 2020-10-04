@@ -148,22 +148,26 @@ def update_status(doc,method):
 		doc.status='Active'
 
 def validate(doc,method):
-    if doc.get('subscription'):
-        subsc=frappe.get_doc('Subscription',doc.get('subscription'))
-        sub_dates=[]
-        next_date=getdate(subsc.current_invoice_start)
-        sub_dates.append(next_date.isoformat())
-        while getdate(subsc.current_invoice_end)!= next_date:
-            next_date=add_days(next_date, 1)
-            sub_dates.append(next_date.isoformat())
-        for d in frappe.get_all("Sales Invoice",filters={'subscription':doc.get('subscription')},fields=['name','from_date','to_date']):
-            next_date=getdate(d.get('from_date'))
-            if next_date.isoformat() in sub_dates and doc.name!=d.name and doc.amended_from:
-                frappe.throw("Invoice <b><a href='#Form/Sales Invoice/{0}'>{0}</a></b> Alredy Exist Between Dates".format(d.name))
-            while getdate(d.get('to_date'))!= next_date:
-                next_date=add_days(next_date, 1)
-                if next_date.isoformat() in sub_dates and doc.name!=d.name:
-                    frappe.throw("Invoice <b><a href='#Form/Sales Invoice/{0}'>{0}</a></b> Alredy Exist Between Dates".format(d.name))
+
+	if doc.get('subscription'):
+		subsc=frappe.get_doc('Subscription',doc.get('subscription'))
+		sub_dates=[]
+		next_date=getdate(subsc.current_invoice_start)
+		sub_dates.append(next_date.isoformat())
+		while getdate(subsc.current_invoice_end)!= next_date:
+			next_date=add_days(next_date, 1)
+			sub_dates.append(next_date.isoformat())
+		for d in frappe.get_all("Sales Invoice",filters={'subscription':doc.get('subscription')},fields=['name','from_date','to_date']):
+			next_date=getdate(d.get('from_date'))
+			if next_date.isoformat() in sub_dates and doc.name!=d.name and doc.amended_from:
+				frappe.throw("Invoice <b><a href='#Form/Sales Invoice/{0}'>{0}</a></b> Alredy Exist Between Dates".format(d.name))
+			while getdate(d.get('to_date'))!= next_date:
+				next_date=add_days(next_date, 1)
+				if next_date.isoformat() in sub_dates and doc.name!=d.name:
+					frappe.throw("Invoice <b><a href='#Form/Sales Invoice/{0}'>{0}</a></b> Alredy Exist Between Dates".format(d.name))
+	if doc.due_days:
+		doc.due_date=add_days(doc.posting_date,doc.due_days)
+		frappe.db.set_value('Sales Invoice',doc.name,'due_date',add_days(doc.posting_date,doc.due_days))
 
 def on_submit(doc,method):
 	if doc.get('project') and not doc.get('subscription'):
@@ -175,6 +179,8 @@ def on_submit(doc,method):
 			'qty':d.get('qty')
 			})
 		pro_doc.save()
+	if doc.sales_order:
+		frappe.db.set_value('Sales Order', doc.sales_order,'status','Invoiced')
 
 def remove_from_project(doc,method):
 	if doc.get('project') and not doc.get('subscription'):
