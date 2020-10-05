@@ -2,8 +2,10 @@ from __future__ import unicode_literals
 from frappe.utils.data import nowdate, getdate
 from frappe.utils import date_diff, add_months, today,add_days
 import frappe,json
+from frappe.share import add
 
-def validate_dates(doc,method):
+
+def validate(doc,method):
     if doc.expected_start_date and  doc.expected_end_date:
         if doc.expected_start_date >= doc.expected_end_date:
                 frappe.throw('Expected End Date Must Be Greater Than Start Date')
@@ -14,6 +16,16 @@ def validate_dates(doc,method):
 
     if doc.get('lock_in_period_start'):
     	doc.lock_in_period_end=add_months(doc.get('lock_in_period_start'),doc.get('lock_in_period'))
+
+    for d in doc.get('participant_list'):
+        if len(frappe.get_all('ToDo',filters={'owner':d.get('user'),'reference_type':doc.doctype,'reference_name':doc.name}))==0:
+            todo=frappe.new_doc('ToDo')
+            todo.reference_type=doc.doctype
+            todo.reference_name=doc.name
+            todo.owner=d.get('user')
+            todo.description="Assignment for Project "+doc.name
+            todo.save()
+    
 
 @frappe.whitelist()
 def fetch_inventory_table(address):
@@ -30,7 +42,7 @@ def fetch_participant_table(designation,table):
     for d in json.loads(table):
         duplicate.append(d.get('user'))
         users.append({'user_id':d.get('user'),'name':d.get('employee'),'employee_name':d.get('employee_name'),'designation':d.get('designation')})
-    for d in frappe.get_all('Employee',filters={'designation':designation},fields=['name','employee_name','user_id','designation']):
+    for d in frappe.get_all('Employee',filters={'designation':designation,'status':'Active'},fields=['name','employee_name','user_id','designation']):
         if frappe.db.exists('User',d.user_id) and d.user_id not in duplicate:
             users.append(d)
     return users
@@ -42,7 +54,7 @@ def fetch_department_participant_table(department,table):
     for d in json.loads(table):
         duplicate.append(d.get('user'))
         users.append({'user_id':d.get('user'),'name':d.get('employee'),'employee_name':d.get('employee_name'),'designation':d.get('designation')})
-    for d in frappe.get_all('Employee',filters={'department':department},fields=['name','employee_name','user_id','designation']):
+    for d in frappe.get_all('Employee',filters={'department':department,'status':'Active'},fields=['name','employee_name','user_id','designation']):
         if frappe.db.exists('User',d.user_id) and d.user_id not in duplicate:
             users.append(d)
     return users
@@ -71,7 +83,7 @@ def set_inventory_details(doc):
                 'status': d.get('status')
             })
 
-        add_doc.water_meter_bill=[]
+        add_doc.electricity_status=[]
         for d in doc.get('water_meter_billing'):
             add_doc.append('water_meter_bill', {
                 'consumer_no': d.get('consumer_no'),

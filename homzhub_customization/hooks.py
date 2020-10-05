@@ -47,6 +47,7 @@ doctype_js = {
 }	
 doctype_list_js = {
 	"Quotation":"public/js/quotation_list.js",
+	"Sales Order":"public/js/sales_order_list.js"
 }
 
 # Home Pages
@@ -106,7 +107,7 @@ doctype_list_js = {
 # }
 doc_events = {
 	"Project": {
-		"validate":"homzhub_customization.homzhub_customization.doctype.project.validate_dates"
+		"validate":"homzhub_customization.homzhub_customization.doctype.project.validate"
 	},
 	"Employee": {
 		"validate":"homzhub_customization.homzhub_customization.doctype.employee.validate_employee"
