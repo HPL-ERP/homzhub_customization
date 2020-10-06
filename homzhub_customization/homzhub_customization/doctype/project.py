@@ -112,4 +112,14 @@ def delete_project_made_from_emp_onboarding(doc,method):
     if doc.get('project') and frappe.db.exists('Project',doc.get('project')):
         frappe.db.set_value("Employee Onboarding",doc.name,'project','')
         frappe.delete_doc('Project',doc.get('project'))
+
+def on_delete_project(doc,method):
+    # removed project link from Task
+    for t in frappe.get_all('Task',filters={'project':doc.name}):
+        frappe.db.set_value('Task',t.name,'project','')
+
+    # removed project link from Employee Onboarding
+    for e in frappe.get_all('Employee Onboarding',filters={'project':doc.name}):
+        frappe.db.set_value('Employee Onboarding',t.name,'project','')
+
        
