@@ -658,14 +658,14 @@
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
-   "creation": "2020-10-06 03:02:22.318995",
+   "creation": "2020-10-08 15:11:51.193960",
    "default_value": null,
    "doc_type": "Quotation",
    "docstatus": 0,
    "doctype_or_field": "DocType",
    "field_name": null,
    "idx": 0,
-   "modified": "2020-10-06 03:02:22.318995",
+   "modified": "2020-10-08 15:11:51.193960",
    "modified_by": "Administrator",
    "name": "Quotation-default_print_format",
    "owner": "Administrator",
@@ -674,7 +674,7 @@
    "parenttype": null,
    "property": "default_print_format",
    "property_type": "Data",
-   "value": "Homzhub quotation"
+   "value": "Homzhub's Quotation"
   },
   {
    "_assign": null,
