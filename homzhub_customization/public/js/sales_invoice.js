@@ -12,6 +12,7 @@ validate:function(frm){
 	// 	cur_frm.doc.items.forEach(function(itm){
 	// 	itm.rate=(parseInt(itm.service_charges_in_per)/100*parseInt(frm.doc.property_rent))
 	// })
+	frm.set_value('total_taxes_and_charges',Math.round(frm.doc.total_taxes_and_charges))
 	if (frm.doc.is_selling_property_==1){
 		cur_frm.doc.items.forEach(function(itm){
 		itm.rate=(parseInt(itm.service_charges_in_per)/100*parseInt(frm.doc.property_rate))
