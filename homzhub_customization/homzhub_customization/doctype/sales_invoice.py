@@ -206,6 +206,7 @@ def on_create_gl_entry(doc,method):
 		for d in si.get('taxes'):
 			if d.account_head==doc.account:
 				frappe.db.set_value(doc.doctype,doc.name,'credit',d.tax_amount)
+				frappe.db.set_value(doc.doctype,doc.name,'credit_in_account_currency',d.tax_amount)
 
 
 
