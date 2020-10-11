@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 import frappe
 from frappe.contacts.doctype.address.address import get_address_display
+from frappe.utils.data import today, getdate
 
 def validate(doc,method):
 	if doc.get('__islocal') and doc.get('project'):
@@ -13,7 +14,12 @@ def validate(doc,method):
 		doc.address_details=get_address_display({"address_dict": project.property_address})
 		doc.agreement_start_=project.agreement_start_date
 		doc.agreement_end=project.agreement_end_date
-
+	if doc.get('exp_start_date'):
+		if getdate(doc.get('exp_start_date')) > getdate(today()):
+			doc.status="Scheduled"
+		if doc.get('exp_end_date'):
+			if getdate(doc.get('exp_start_date'))<= getdate(today()) and getdate(today()) <= getdate(doc.get('exp_end_date')):
+				doc.status="Open"
 def after_insert(doc,method):
 	from frappe.desk.form import assign_to
 	if doc.get('project'):
@@ -32,3 +38,10 @@ def after_insert(doc,method):
 									"name":doc.get('name'),
 									"description": doc.get('subject')
 								})
+
+# def reports_to_task():
+# 	taskList=[]
+# 	for t in frappe.get_all('Task',fields=['name','status','exp_start_date']):
+# 		if t.status in ['Overdue','Pending Review'] or  getdate(t.exp_end_date) < getdate(today()):
+# 			taskList.append(t.name)
+# 	for 
