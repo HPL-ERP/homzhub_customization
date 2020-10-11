@@ -200,4 +200,14 @@ def remove_from_project(doc,method):
 				})
 		pro_doc.save()
 
+def on_create_gl_entry(doc,method):
+	print('###########')
+	if doc.get('voucher_type')=="Sales Invoice":
+		si=frappe.get_doc('Sales Invoice',doc.get('voucher_type'))
+		for d in si.get('taxes'):
+			if d.account_head==doc.account:
+				print(d.tax_amount)
+				doc.credit=d.tax_amount
+
+
 

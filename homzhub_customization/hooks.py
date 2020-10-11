@@ -142,6 +142,9 @@ doc_events = {
 	"ToDo":{
 		"validate":"homzhub_customization.homzhub_customization.doctype.todo.validate",
 		"on_change":"homzhub_customization.homzhub_customization.doctype.todo.on_delete"
+	},
+	"GL Entry":{
+		"after_insert":"homzhub_customization.homzhub_customization.doctype.sales_invoice.on_create_gl_entry"
 	}
 
 }
