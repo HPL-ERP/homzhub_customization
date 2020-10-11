@@ -148,7 +148,11 @@ def update_status(doc,method):
 		doc.status='Active'
 
 def validate(doc,method):
-
+	total=0
+	for d in doc.get('taxes'):
+		total+=round(d.tax_amount)
+		d.tax_amount=round(d.tax_amount)
+	doc.total_taxes_and_charges=total
 	if doc.get('subscription'):
 		subsc=frappe.get_doc('Subscription',doc.get('subscription'))
 		sub_dates=[]
@@ -195,5 +199,15 @@ def remove_from_project(doc,method):
 				'qty':d.get('qty')
 				})
 		pro_doc.save()
+
+def on_create_gl_entry(doc,method):
+	print('###########')
+	if doc.get('voucher_type')=="Sales Invoice":
+		si=frappe.get_doc('Sales Invoice',doc.get('voucher_type'))
+		for d in si.get('taxes'):
+			if d.account_head==doc.account:
+				print(d.tax_amount)
+				doc.credit=d.tax_amount
+
 
 
