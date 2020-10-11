@@ -148,7 +148,11 @@ def update_status(doc,method):
 		doc.status='Active'
 
 def validate(doc,method):
-	doc.total_taxes_and_charges=round(doc.total_taxes_and_charges)
+	total=0
+	for d in doc.get('taxes'):
+		total+=round(d.tax_amount)
+		d.tax_amount=round(d.tax_amount)
+	doc.total_taxes_and_charges=total
 	if doc.get('subscription'):
 		subsc=frappe.get_doc('Subscription',doc.get('subscription'))
 		sub_dates=[]
