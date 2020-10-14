@@ -44,6 +44,7 @@ doctype_js = {
 				"Subscription":"public/js/subscription.js",
 				"Journal Entry":"public/js/journal_entry.js",
 				"Quotation":"public/js/quotation.js",
+				"Expense Claim":"public/js/expense_claim.js",
 }	
 doctype_list_js = {
 	"Quotation":"public/js/quotation_list.js",
@@ -144,7 +145,8 @@ doc_events = {
 		"on_change":"homzhub_customization.homzhub_customization.doctype.todo.on_delete"
 	},
 	"GL Entry":{
-		"on_change":"homzhub_customization.homzhub_customization.doctype.sales_invoice.on_create_gl_entry"
+		"on_change":["homzhub_customization.homzhub_customization.doctype.sales_invoice.on_create_gl_entry",
+					"homzhub_customization.homzhub_customization.doctype.gl_entry.after_insert"]
 	}
 
 }
