@@ -12,12 +12,17 @@ cur_frm.dashboard.add_transactions([
 ]);
 frappe.ui.form.on('Project', {
     setup(frm) {
+		let customer = [];
+		cur_frm.doc.owner_list.forEach(value => {
+			customer.push(value.prop_owner)
+		});
+		// customer.push(frm.doc.property_owner)
 		frm.set_query('property_address', function(doc) {
 			return {
-				query: 'frappe.contacts.doctype.address.address.address_query',
+				query: 'homzhub_customization.homzhub_customization.doctype.project.address_query',
 				filters: {
 					link_doctype: 'Customer',
-					link_name: doc.property_owner
+					link_name: customer
 				}
 			};
 		});
@@ -235,6 +240,15 @@ frappe.ui.form.on("Project Participants", "user", function(frm, cdt, cdn) {
 		refresh_field("employee", d.name, d.parentfield);
 		refresh_field("employee_name", d.name, d.parentfield);
 		refresh_field("designation", d.name, d.parentfield);
+	})
+
+});
+
+frappe.ui.form.on("Owner List", "prop_owner", function(frm, cdt, cdn) {
+	var d = locals[cdt][cdn];
+	frappe.db.get_value('Customer', {name: d.prop_owner}, ['customer_name'], (r) => {
+		d.owner_name=r.customer_name
+		refresh_field("owner_name", d.name, d.parentfield);
 	})
 
 });
