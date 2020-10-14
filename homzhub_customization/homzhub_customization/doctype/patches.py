@@ -24,4 +24,22 @@ def project_subscription_plan():
 				"subscription" : sub.name,
 				"subscription_plan" :  pl.plan
 				})
-		doc.save()    
+		doc.save()   
+
+def set_participant_table_default_values():
+	# bench execute homzhub_customization.homzhub_customization.doctype.patches.set_participant_table_default_values
+	
+	for p in frappe.get_all('Project'):
+		doc=frappe.get_doc('Project',p.name)
+		user=[]
+		for d in doc.get('participant_list'):
+			user.append(d.get('user'))
+		for name in ['karan.nashine@homzhub.com','awantika.raut@homzhub.com']:
+			if name not in user:
+				doc.append("participant_list", {
+					"user" : name,
+					"employee" :frappe.db.get_value('Employee', {'user_id': name}, 'name'),
+					"employee_name":frappe.db.get_value('Employee', {'user_id': name}, 'employee_name','designation'),
+					"designation":frappe.db.get_value('Employee', {'user_id': name}, 'designation')
+					})
+		doc.save()
