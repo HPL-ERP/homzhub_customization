@@ -124,7 +124,7 @@ def on_delete_project(doc,method):
 		frappe.db.set_value('Employee Onboarding',t.name,'project','')
 
 @frappe.whitelist()
-@frappe.validate_and_sanitize_search_inputs
+# @frappe.validate_and_sanitize_search_inputs
 def address_query(doctype, txt, searchfield, start, page_len, filters):
 	from frappe.desk.reportview import get_match_cond
 
