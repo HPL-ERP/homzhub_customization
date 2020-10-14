@@ -1,5 +1,5 @@
 frappe.ui.form.on('Task', {
-	onload: function(frm) {
+	project: function(frm) {
 		if (frm.doc.project){
             frappe.call({
                 method:
@@ -25,6 +25,13 @@ frappe.ui.form.on('Task', {
                     cur_frm.refresh_field("tenant_list")
                 }
             })
+            frappe.db.get_value('Project', {name:frm.doc.project}, ['agreement_start_date','agreement_end_date','property_address','address_detail'], (r) => {
+                frm.set_value('agreement_start_',r.agreement_start_date)
+                frm.set_value('agreement_end',r.agreement_end_date)
+                frm.set_value('project_address',r.property_address)
+                frm.set_value('address_details',r.address_detail)
+            })
         }
+
 	},
 })
