@@ -967,7 +967,7 @@
    "columns": 0,
    "creation": "2020-07-12 14:28:56.383171",
    "default": null,
-   "depends_on": "eval:in_list([\"Individual client\", \"Corporate Client\"], doc.project_type)",
+   "depends_on": "",
    "description": null,
    "docstatus": 0,
    "dt": "Project",
