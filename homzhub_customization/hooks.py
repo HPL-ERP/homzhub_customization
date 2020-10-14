@@ -45,6 +45,7 @@ doctype_js = {
 				"Journal Entry":"public/js/journal_entry.js",
 				"Quotation":"public/js/quotation.js",
 				"Expense Claim":"public/js/expense_claim.js",
+				"Task":"public/js/task.js",
 }	
 doctype_list_js = {
 	"Quotation":"public/js/quotation_list.js",
