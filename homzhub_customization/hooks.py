@@ -110,7 +110,9 @@ doctype_list_js = {
 doc_events = {
 	"Project": {
 		"validate":"homzhub_customization.homzhub_customization.doctype.project.validate",
-		"on_trash":"homzhub_customization.homzhub_customization.doctype.project.on_delete_project"
+		"on_trash":"homzhub_customization.homzhub_customization.doctype.project.on_delete_project",
+		"after_insert":"homzhub_customization.homzhub_customization.doctype.project.after_insert",
+
 	},
 	"Employee": {
 		"validate":"homzhub_customization.homzhub_customization.doctype.employee.validate_employee"
