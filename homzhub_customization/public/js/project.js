@@ -13,9 +13,11 @@ cur_frm.dashboard.add_transactions([
 frappe.ui.form.on('Project', {
     setup(frm) {
 		let customer = [];
-		cur_frm.doc.owner_list.forEach(value => {
+		if (cur_frm.doc.owner_list){
+		Object.values(cur_frm.doc.owner_list).forEach(function(value) {
 			customer.push(value.prop_owner)
 		});
+	}
 		// customer.push(frm.doc.property_owner)
 		frm.set_query('property_address', function(doc) {
 			return {
