@@ -147,8 +147,19 @@ doc_events = {
 	},
 	"GL Entry":{
 		"on_change":["homzhub_customization.homzhub_customization.doctype.sales_invoice.on_create_gl_entry",
-					"homzhub_customization.homzhub_customization.doctype.gl_entry.after_insert"]
+					"homzhub_customization.homzhub_customization.doctype.gl_entry.after_insert",
+					"homzhub_customization.homzhub_customization.doctype.purchase_invoice.on_create_gl_entry"]
+	},
+	"Sales Order":{
+		"validate":"homzhub_customization.homzhub_customization.doctype.sales_order.validate"
+	},
+	"Purchase Order":{
+		"validate":"homzhub_customization.homzhub_customization.doctype.purchase_order.validate"
+	},
+	"Purchase Invoice":{
+		"validate":"homzhub_customization.homzhub_customization.doctype.sales_order.validate"
 	}
+
 
 }
 
