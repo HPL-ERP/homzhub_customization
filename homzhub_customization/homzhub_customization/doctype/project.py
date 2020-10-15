@@ -19,7 +19,7 @@ def validate(doc,method):
 		doc.lock_in_period_end=add_months(doc.get('lock_in_period_start'),doc.get('lock_in_period'))
 
 	for d in doc.get('participant_list'):
-		if len(frappe.get_all('ToDo',filters={'owner':d.get('user'),'reference_type':doc.doctype,'reference_name':doc.name}))==0:
+		if not doc.get('__islocal') and len(frappe.get_all('ToDo',filters={'owner':d.get('user'),'reference_type':doc.doctype,'reference_name':doc.name}))==0:
 			todo=frappe.new_doc('ToDo')
 			todo.reference_type=doc.doctype
 			todo.reference_name=doc.name
@@ -27,7 +27,15 @@ def validate(doc,method):
 			todo.description="Assignment for Project "+doc.name
 			todo.save()
 	
-
+def after_insert(doc,method):
+    for d in doc.get('participant_list'):
+        if len(frappe.get_all('ToDo',filters={'owner':d.get('user'),'reference_type':doc.doctype,'reference_name':doc.name}))==0:
+            todo=frappe.new_doc('ToDo')
+            todo.reference_type=doc.doctype
+            todo.reference_name=doc.name
+            todo.owner=d.get('user')
+            todo.description="Assignment for Project "+doc.name
+            todo.save()
 @frappe.whitelist()
 def fetch_inventory_table(address):
 	doc=frappe.get_doc('Address',address)
@@ -124,7 +132,7 @@ def on_delete_project(doc,method):
 		frappe.db.set_value('Employee Onboarding',t.name,'project','')
 
 @frappe.whitelist()
-@frappe.validate_and_sanitize_search_inputs
+# @frappe.validate_and_sanitize_search_inputs
 def address_query(doctype, txt, searchfield, start, page_len, filters):
 	from frappe.desk.reportview import get_match_cond
 
