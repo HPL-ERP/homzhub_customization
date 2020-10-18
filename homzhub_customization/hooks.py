@@ -160,7 +160,10 @@ doc_events = {
 	},
 	"Purchase Invoice":{
 		"validate":"homzhub_customization.homzhub_customization.doctype.sales_order.validate"
-	}
+	},
+	"Comment":{
+		"validate":"homzhub_customization.homzhub_customization.doctype.comment.comment"
+	},
 
 
 }
