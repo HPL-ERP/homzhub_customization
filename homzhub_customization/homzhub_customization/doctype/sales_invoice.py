@@ -222,5 +222,11 @@ def on_create_gl_entry(doc,method):
 				frappe.db.set_value(doc.doctype,doc.name,'credit',d.tax_amount)
 				frappe.db.set_value(doc.doctype,doc.name,'credit_in_account_currency',d.tax_amount)
 
-
+def delete_zero_amount_invoice():
+	for i in frappe.get_all('Sales Invoice',{'total':0},['name','total']):
+		for si in frappe.get_all('Subscription Invoice',{'invoice':i.name},['name','parent']):
+			frappe.delete_doc('Subscription Invoice',si.name)
+		doc=frappe.get_doc('Sales Invoice',i.name)
+		doc.cancel()
+		frappe.delete_doc('Sales Invoice',doc.name)
 
