@@ -231,3 +231,16 @@ def delete_zero_amount_invoice():
 		doc.cancel()
 		frappe.delete_doc('Sales Invoice',doc.name)
 
+@frappe.whitelist()
+def get_customer_list(customer):
+	for pro in frappe.get_all('Project',{'status':('!=','Cancelled')}):
+		doc=frappe.get_doc('Project',pro.name)
+		if doc.get('customer')==customer:
+			return pro.name
+		customer_list=[]
+		for own in doc.get('owner_list'):
+			customer_list.append(own.prop_owner)
+		if customer in customer_list:
+			return pro.name
+
+

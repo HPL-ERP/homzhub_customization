@@ -9,9 +9,166 @@ frappe.ui.form.on('Sales Invoice Item', {
 
 frappe.ui.form.on('Sales Invoice', {
 validate:function(frm){
-	// 	cur_frm.doc.items.forEach(function(itm){
-	// 	itm.rate=(parseInt(itm.service_charges_in_per)/100*parseInt(frm.doc.property_rent))
-	// })
+	if (!frm.doc.project){
+		frappe.call({
+			method: "homzhub_customization.homzhub_customization.doctype.sales_invoice.get_customer_list",
+			args: {"customer": frm.doc.customer},
+			callback: function(r) {
+				if(r.message) {
+					frappe.confirm(
+						"Customer available in this project <b>"+r.message+"</b> </br>And do you want to link this invoice?",
+									function(){
+										frm.set_value('project',r.message)
+									},
+									function(){
+										frappe.confirm(
+											'Do you want new project?',
+											function(){
+												let table_values1 = [];
+												let table_values2 = [];
+												let table_values3 = [];
+												var d = new frappe.ui.Dialog({
+													title: __("New Project"),
+													fields: [
+														{
+															'fieldname': 'project_name',
+															'fieldtype': 'Data',
+															'label': __('Project Name'),
+															'reqd': 1
+														},
+														{
+															'fieldname': 'project_template',
+															'fieldtype': 'Link',
+															'label': __('From Template'),
+															'options': 'Project Template'
+														},
+														{
+															'fieldname': 'expected_start_date',
+															'fieldtype': 'Date',
+															'label': __('Expected Start Date')
+														},
+														{
+															'fieldname': 'expected_end_date',
+															'fieldtype': 'Date',
+															'label': __('Expected End Date')
+														},
+														{
+															'fieldname': 'project_type',
+															'fieldtype': 'Link',
+															'label': __('Project Type'),
+															'options':'Project Type'
+														},
+														{
+															'fieldname': 'owner_list',
+															'fieldtype': 'Table',
+															'label': __('Owner List'),
+															'options':'Owner List',
+															'fields':[
+																{
+																	fieldtype:'Link',
+																	fieldname:'prop_owner',
+																	label: __('Owner'),
+																	options:'Customer',
+																	in_list_view:1,
+																	onchange: function() {
+																		Object.values(table_values1).forEach(i=>{
+																			frappe.db.get_value('Customer', {name: i.prop_owner}, ['customer_name'], (r) => {
+																				i['owner_name']=r.customer_name
+																				d.fields_dict.owner_list.grid.refresh();
+																			})
+																			})
+																			d.fields_dict.owner_list.grid.refresh();
+																	}
+																},
+																{
+																	fieldtype:'Data',
+																	fieldname:'owner_name',
+																	label: __('Owner Name'),
+																	in_list_view:1
+																}
+															],
+															data: table_values1,
+															in_place_edit: true,
+															get_data: function() {
+																return table_values1;
+															}
+														},
+														{
+															'fieldname': 'tenant_list',
+															'fieldtype': 'Table',
+															'label': __('Tenant List'),
+															'options':'Tenant List',
+															'fields':[
+																{
+																	fieldtype:'Link',
+																	fieldname:'tenant',
+																	label: __('Tenant'),
+																	options:'Customer',
+																	in_list_view:1,
+																	onchange: function() {
+																		Object.values(table_values2).forEach(i=>{
+																			frappe.db.get_value('Customer', {name: i.tenant}, ['customer_name'], (r) => {
+																				i['tenant_name']=r.customer_name
+																				d.fields_dict.tenant_list.grid.refresh();
+																			})
+																			})
+																			d.fields_dict.tenant_list.grid.refresh();
+																	}
+																},
+																{
+																	fieldtype:'Data',
+																	fieldname:'tenant_name',
+																	label: __('Tenant Name'),
+																	in_list_view:1
+																}
+															],
+															data: table_values2,
+															in_place_edit: true,
+															get_data: function() {
+																return table_values2;
+															}
+														},
+														{
+															'fieldname': 'property_address',
+															'fieldtype': 'Link',
+															'label': __('Property Address'),
+															'options':'Address',
+															"get_query": function () {
+															let customer = [];
+															if (d.get_value('owner_list')){
+															Object.values(d.get_value('owner_list')).forEach(function(value) {
+																customer.push(value.prop_owner)
+															});
+															}
+															return {
+																query: 'homzhub_customization.homzhub_customization.doctype.project.address_query',
+																filters: {
+																	link_doctype: 'Customer',
+																	link_name: customer
+																}
+															};
+														}
+
+														},
+														
+													],
+													primary_action: function(){
+														console.log('$$$$$$$$$$$$$$$')
+														},
+														primary_action_label: __('Save')
+												});
+												d.show();
+											},
+											function(){
+												window.close();
+											}
+										)
+									}
+								)
+				}
+			}
+		});
+	}
 	frm.set_value('total_taxes_and_charges',Math.round(frm.doc.total_taxes_and_charges))
 	if (frm.doc.is_selling_property_==1){
 		cur_frm.doc.items.forEach(function(itm){
