@@ -49,7 +49,8 @@ doctype_js = {
 }	
 doctype_list_js = {
 	"Quotation":"public/js/quotation_list.js",
-	"Sales Order":"public/js/sales_order_list.js"
+	"Sales Order":"public/js/sales_order_list.js",
+	"Subscription":"public/js/subscription_list.js"
 }
 
 # Home Pages
