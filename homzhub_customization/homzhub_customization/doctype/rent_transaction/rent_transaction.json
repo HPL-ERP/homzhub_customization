@@ -14,6 +14,8 @@
   "owner_name",
   "tenant_list",
   "column_break_4",
+  "property_address",
+  "property_address_details",
   "subscription",
   "subscription_plan",
   "subscription_start_date",
@@ -257,9 +259,20 @@
    "fieldtype": "Table",
    "label": "Owner List",
    "options": "Owner List"
+  },
+  {
+   "fieldname": "property_address",
+   "fieldtype": "Link",
+   "label": "Property Address",
+   "options": "Address"
+  },
+  {
+   "fieldname": "property_address_details",
+   "fieldtype": "Small Text",
+   "label": "Property Address Details"
   }
  ],
- "modified": "2020-09-04 23:05:25.830275",
+ "modified": "2020-10-22 13:48:24.961711",
  "modified_by": "Administrator",
  "module": "homzhub_customization",
  "name": "Rent Transaction",
