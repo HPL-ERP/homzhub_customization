@@ -1,9 +1,10 @@
 from __future__ import unicode_literals
-import frappe
+import frappe,json
 from erpnext.accounts.doctype.accounting_dimension.accounting_dimension import get_accounting_dimensions
 from erpnext.accounts.doctype.subscription_plan.subscription_plan import get_plan_rate
 from frappe.utils.data import nowdate, getdate, cint, add_days, date_diff, get_last_day, add_to_date, flt
 from homzhub_customization.homzhub_customization.doctype.subscription import process
+
 # from erpnext.accounts.doctype.subscription.subscription import process
 	
 def get_plan_rate(doc,plan, quantity=1, customer=None):
@@ -242,5 +243,28 @@ def get_customer_list(customer):
 			customer_list.append(own.prop_owner)
 		if customer in customer_list:
 			return pro.name
+
+@frappe.whitelist()
+def make_project(doc):
+	doc=json.loads(doc)
+	pro=frappe.new_doc('Project')
+	pro.project_name=doc.get('project_name')
+	pro.project_template=doc.get('project_template')
+	pro.expected_start_date=doc.get('expected_start_date')
+	pro.expected_end_date=doc.get('expected_end_date')
+	pro.project_type=doc.get('project_type')
+	pro.property_address=doc.get('property_address')
+	for own in doc.get('owner_list'):
+		pro.append("owner_list", {
+			"prop_owner" : own.get('prop_owner'),
+			"owner_name" : own.get('owner_name')
+			})
+	for ten in doc.get('tenant_list'):
+		pro.append("tenant_list", {
+			"tenant" : ten.get('tenant'),
+			"tenant_name" : ten.get('tenant_name')
+			})
+	pro.save()
+	return pro.name
 
 

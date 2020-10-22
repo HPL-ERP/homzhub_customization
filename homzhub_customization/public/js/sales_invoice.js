@@ -26,7 +26,6 @@ validate:function(frm){
 											function(){
 												let table_values1 = [];
 												let table_values2 = [];
-												let table_values3 = [];
 												var d = new frappe.ui.Dialog({
 													title: __("New Project"),
 													fields: [
@@ -153,7 +152,18 @@ validate:function(frm){
 														
 													],
 													primary_action: function(){
-														console.log('$$$$$$$$$$$$$$$')
+														d.hide();
+														frappe.call({
+															args: {
+																'doc':d.get_values()
+															},
+															method: "homzhub_customization.homzhub_customization.doctype.sales_invoice.make_project",
+															callback: function (r) {
+																if (r.message) {
+																	frm.set_value('project',r.message)
+																}
+															}
+														});
 														},
 														primary_action_label: __('Save')
 												});
