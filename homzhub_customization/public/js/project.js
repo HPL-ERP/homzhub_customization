@@ -18,7 +18,6 @@ frappe.ui.form.on('Project', {
 			customer.push(value.prop_owner)
 		});
 	}
-		// customer.push(frm.doc.property_owner)
 		frm.set_query('property_address', function(doc) {
 			return {
 				query: 'homzhub_customization.homzhub_customization.doctype.project.address_query',
@@ -247,6 +246,21 @@ frappe.ui.form.on("Project Participants", "user", function(frm, cdt, cdn) {
 });
 
 frappe.ui.form.on("Owner List", "prop_owner", function(frm, cdt, cdn) {
+	let customer = [];
+	if (cur_frm.doc.owner_list){
+	Object.values(cur_frm.doc.owner_list).forEach(function(value) {
+		customer.push(value.prop_owner)
+	});
+}
+	frm.set_query('property_address', function(doc) {
+		return {
+			query: 'homzhub_customization.homzhub_customization.doctype.project.address_query',
+			filters: {
+				link_doctype: 'Customer',
+				link_name: customer
+			}
+		};
+	});
 	var d = locals[cdt][cdn];
 	frappe.db.get_value('Customer', {name: d.prop_owner}, ['customer_name'], (r) => {
 		d.owner_name=r.customer_name
