@@ -16,6 +16,8 @@ def validate(doc,method):
 			frappe.throw('Agreement End Date Must Be Greater Than Start Date')
 
 	if doc.get('lock_in_period_start'):
+		if not doc.get('lock_in_period'):
+			frappe.throw('Please fill <b>Lock In Period</b> field')
 		doc.lock_in_period_end=add_months(doc.get('lock_in_period_start'),doc.get('lock_in_period'))
 
 	for d in doc.get('participant_list'):
