@@ -2,12 +2,15 @@ from __future__ import unicode_literals
 import frappe
 import json
 from frappe.utils.data import flt
+from frappe.utils.data import add_days
 
 def validate(doc,method):
 	total=0
 	for d in doc.get('taxes'):
 		total+=round(d.tax_amount)
 		d.tax_amount=round(d.tax_amount)
+	if doc.due_days:
+		doc.due_date=add_days(doc.transaction_date,doc.due_days)
 
 @frappe.whitelist()
 def get_rent_distribution_table(docname,doctype):

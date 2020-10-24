@@ -102,6 +102,11 @@ frappe.ui.form.on('Subscription', {
 		frappe.db.get_value("Customer", {"name":frm.doc.customer},"customer_name", function(r){
         	frm.set_value("customer_name",r.customer_name)
 		})
+	},
+	sales_order:function(frm){
+		frappe.db.get_value("Sales Order", {"name":frm.doc.sales_order},['subscription_start_date'], function(r){
+			frm.set_value('start',r.subscription_start_date)
+			})
 	}
 
 })

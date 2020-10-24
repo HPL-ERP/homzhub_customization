@@ -67,6 +67,24 @@ onload:function(frm){
 		}
 	})
 }
+},
+project:function(frm){
+	if (frm.doc.project){
+	frappe.db.get_value("Project", {"name":frm.doc.project},['agreement_start_date','agreement_end_date'], function(r){
+		frm.set_value('agreement_start_date',r.agreement_start_date)
+		frm.set_value('agreement_end_date',r.agreement_end_date)
+		})
+	}
+},
+same_as_agreement_period:function(frm){
+	if (frm.doc.same_as_agreement_period==1){
+		frm.set_value('subscription_start_date',frm.doc.agreement_start_date)
+		frm.set_value('subscription_end_date',frm.doc.agreement_end_date)
+	}
+	else{
+		frm.set_value('subscription_start_date','')
+		frm.set_value('subscription_end_date','')
+	}
 }
 })
 
