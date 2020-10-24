@@ -8,7 +8,7 @@ frappe.ui.form.on('Sales Invoice Item', {
 })
 
 frappe.ui.form.on('Sales Invoice', {
-validate:function(frm){
+customer:function(frm){
 	if (!frm.doc.project){
 		frappe.call({
 			method: "homzhub_customization.homzhub_customization.doctype.sales_invoice.get_customer_list",
@@ -179,6 +179,8 @@ validate:function(frm){
 			}
 		});
 	}
+},
+validate:function(frm){
 	frm.set_value('total_taxes_and_charges',Math.round(frm.doc.total_taxes_and_charges))
 	if (frm.doc.is_selling_property_==1){
 		cur_frm.doc.items.forEach(function(itm){
