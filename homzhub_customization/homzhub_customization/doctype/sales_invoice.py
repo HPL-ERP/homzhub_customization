@@ -164,6 +164,8 @@ def validate(doc,method):
 	doc.total_taxes_and_charges=tax_total
 	if doc.apply_discount_on=='Net Total':
 		doc.grand_total=(myround(doc.net_total)+tax_total)
+	if doc.apply_discount_on=='Grand Total':
+		doc.grand_total=doc.rounded_total
 	if doc.get('subscription'):
 		subsc=frappe.get_doc('Subscription',doc.get('subscription'))
 		sub_dates=[]
