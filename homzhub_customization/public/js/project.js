@@ -268,3 +268,11 @@ frappe.ui.form.on("Owner List", "prop_owner", function(frm, cdt, cdn) {
 	})
 
 });
+frappe.ui.form.on("POA List", "poa", function(frm, cdt, cdn) {
+	var d = locals[cdt][cdn];
+	frappe.db.get_value('Customer', {name: d.poa}, ['customer_name'], (r) => {
+		d.poa_name=r.customer_name
+		refresh_field("poa_name", d.name, d.parentfield);
+	})
+
+});
