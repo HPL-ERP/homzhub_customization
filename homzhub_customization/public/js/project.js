@@ -12,21 +12,6 @@ cur_frm.dashboard.add_transactions([
 ]);
 frappe.ui.form.on('Project', {
     setup(frm) {
-		let customer = [];
-		if (cur_frm.doc.owner_list){
-		Object.values(cur_frm.doc.owner_list).forEach(function(value) {
-			customer.push(value.prop_owner)
-		});
-	}
-		frm.set_query('property_address', function(doc) {
-			return {
-				query: 'homzhub_customization.homzhub_customization.doctype.project.address_query',
-				filters: {
-					link_doctype: 'Customer',
-					link_name: customer
-				}
-			};
-		});
 		frm.set_query("tenant", "tenant_list", function() {
 			return {
 				filters: {
@@ -175,7 +160,38 @@ frappe.ui.form.on('Project', {
 				console.log('')
 			}
 		})
+	},
+	onload:function(frm){
+		if ((cur_frm.doc.owner_list).length>0 || frm.doc.customer){
+			frm.trigger("filter_property_address");
+		}
+	},
+	customer:function(frm){
+		if ((cur_frm.doc.owner_list).length>0 || frm.doc.customer){
+			frm.trigger("filter_property_address");
+		}
+	},
+	filter_property_address:function(frm){
+		let customer = [];
+		if (cur_frm.doc.owner_list){
+		Object.values(cur_frm.doc.owner_list).forEach(function(value) {
+			customer.push(value.prop_owner)
+		});
+		if (frm.doc.customer){
+			customer.push(frm.doc.customer)
+		}
 	}
+		frm.set_query('property_address', function(doc) {
+			return {
+				query: 'homzhub_customization.homzhub_customization.doctype.project.address_query',
+				filters: {
+					link_doctype: 'Customer',
+					link_name: customer
+				}
+			};
+		});
+	}
+
 
 })
 frappe.ui.form.on("Tenant List", "tenant", function(frm, cdt, cdn) {
@@ -251,6 +267,9 @@ frappe.ui.form.on("Owner List", "prop_owner", function(frm, cdt, cdn) {
 	Object.values(cur_frm.doc.owner_list).forEach(function(value) {
 		customer.push(value.prop_owner)
 	});
+	if (frm.doc.customer){
+		customer.push(frm.doc.customer)
+	}
 }
 	frm.set_query('property_address', function(doc) {
 		return {
